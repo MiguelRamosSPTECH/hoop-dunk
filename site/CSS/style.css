@@ -241,7 +241,7 @@ body, html {
     font-size: 19px;
 }
 
-#content-final button {
+#content-final a {
     background-color: transparent;
     border: none;
     cursor: pointer;
