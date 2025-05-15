@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+@font-face {
+    font-family: "IntroRust";
+    src: url("../FONTS/IntroRust.otf") format('opentype');
+}
+
+
+body, html {
+    margin: 0;
+    left: 0;
+    font-family: "Poppins", sans-serif;
+}
+.container-all {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: #121212;
+}
+
+/* navbar lateral */
+#navbar-lateral {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 25%;
+    height: 100%;
+}
+
+#area-logo-hoopdunk {
+    background-image: url("../IMAGE/ofc-logo-hoopdunk.png");
+    background-size: cover;
+    background-position: center;
+    width: 80%;
+    height: 25%;
+}
+
+#menu-navbar {
+    color: white;
+    height: 55%;
+    width: 80%;
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+#menu-navbar ul {
+    list-style: none;
+    font-family: "IntroRust", sans-serif;
+    color: #cdcdcd;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    gap: 40px;
+    padding: 0;
+}
+#menu-navbar ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.icon {
+    width: 30px;
+}
+
+#area-perfil {
+    height: 20%;
+    width: 80%;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#foto-perfil {
+    background-image: url("../IMAGE/fotografo-de-retrato-de-advogados_adv-47.jpg");
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 45%;
+    width: 22%;
+}
+#nicknames {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+#nomeUsuario {
+    font-weight: 800;
+}
+#nickname {
+    color: #757575;
+    font-weight: 700;
+}
+
+/* posts */
+#area-posts {
+    width: 50%;
+    height: 100%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+#area-send-post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 25%;
+    border-bottom: 1px solid gray;
+}
+#content-post {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    height: 70%;
+    width: 90%;
+}
+#foto-perfil-post {
+    width: 9%;
+    height: 47%;
+    background-image: url("../IMAGE/fotografo-de-retrato-de-advogados_adv-47.jpg");
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+}
+#desc-post {
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 18px;
+    width: 90%;
+    flex-wrap: nowrap;
+    resize: none;
+}
+#functions-post {
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    justify-content: space-between;
+    height: 30%;
+    width: 84%;
+}
+#send-photo {
+    width: 6%;
+    height: 70%;
+    cursor: pointer;
+}
+#functions-post button {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    background-color: #888888;
+    width: 13%;
+    height: 70%;
+    border-radius: 15px;
+    border: none;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+/* pesquisar e seguidores */
+
+#area-explorar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    gap: 25px;
+}
+
+#area-pesquisar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border: 1px solid gray;
+    width: 90%;
+    height: 9%;
+}
+#input-pesquisar {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+}
+#input-pesquisar img {
+    width: 8%;
+    height: 35%;
+}
+#input-pesquisar input {
+    width: 89%;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+#area-pessoas {
+    width: 90%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+}
+#area-pessoas h3{
+    color: #cdcdcd;
+    font-family: "IntroRust", sans-serif;
+}
+#para-seguir {
+    height: 100%;
+    width: 100%;
+}
+.pessoa-seguir {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    height: 15%;
+}
+.pessoa-seguir img {
+    width: 14%;
+    height: 60%;
+    border-radius: 50%;
+}
+.info-pessoa {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+}
+.info-pessoa label {
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+}
+.info-pessoa span {
+    font-size: 12px;
+    color: gray;
+    font-weight: 700;
+}
+.pessoa-seguir button {
+    border-radius: 15px;    
+    width: 22%;
+    height: 35%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    background-color: #b4926b;
+    border: none;
+}
