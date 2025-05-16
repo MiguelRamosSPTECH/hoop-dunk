@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | HoopDunk</title>
+    <link rel="stylesheet" href="CSS/login.css">
+    <script src="../js/loginCadastro.js"></script>
+</head>
+<body>
+    <div class="container-all" id="bg-cadastro">
+        <div id="area-form">
+            <div id="card-login">
+                <div id="form-login">
+                    <div id="logo-hoopdunk"></div>
+                    <div id="area-inputs">
+                        <input type="text" placeholder="Nome completo" id="nome" maxlength="35" class="inputs">
+                        <input type="text" placeholder="Nome de usuário" id="nomePerfil" minlength="5" maxlength="20" class="inputs">
+                        <input type="email" placeholder="E-mail" id="email" class="inputs">
+                        <input type="password" placeholder="Senha" id="senha" minlength="8" class="inputs">
+                        <span id="erros"></span>
+                        <button onclick="cadastrar()">Cadastrar</button>
+                    </div>
+                    <div id="redirect">
+                        <label>Ainda não possui conta? <a href="./login.html">Faça Login</a></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

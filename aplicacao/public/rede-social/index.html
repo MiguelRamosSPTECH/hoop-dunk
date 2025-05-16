@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoopdunk</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script src="../js/sessao.js"></script>
+    <script src="../js/seguidores.js"></script>
+</head>
+<body onload="validarSessao(), trazerSugestoesPessoas()">
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <div id="area-logo-hoopdunk"></div>
+            <div id="menu-navbar">
+                <ul>
+                    <li><img class="icon" src="./IMAGE/home-icon.png">INICIAL</li>
+                    <li><img class="icon" src="./IMAGE/search-icon.png">EXPLORAR</li>
+                    <li><img class="icon" src="./IMAGE/man-icon.png">QUADRAS</li>
+                    <li><img class="icon" src="./IMAGE/schedule-icon.png">EVENTOS</li>
+                </ul>
+            </div>
+            <button id="area-perfil">
+                <div id="foto-perfil"></div>
+                <div id="nicknames">
+                    <span id="nomeUsuario"></span>
+                    <span id="nickname"></span>
+                </div>
+            </button>
+        </div>
+        <div id="area-posts">
+            <div id="area-send-post">
+                <div id="content-post">
+                    <div id="foto-perfil-post"></div>
+                    <textarea id="desc-post" onkeyup="atualizaButton()" rows="1" placeholder="We’re gonna be championships!"></textarea>
+                </div>
+                <div id="functions-post">
+                    <img id="send-photo" src="IMAGE/picture-icon.png" alt="">
+                    <button id="send_post">Shoot!</button>
+                </div>
+            </div>
+        </div>
+        <div id="area-explorar">
+            <div id="area-pesquisar">
+                <div id="input-pesquisar">
+                    <img src="./IMAGE/search-icon.png"><input type="text" placeholder="Pesquisar" id="search-people">
+                </div>
+            </div>
+            <div id="area-pessoas">
+                <h3>SUGESTÕES</h3>
+
+                <!-- for com as pessoa q ele n segue -->
+                <div id="para-seguir"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function atualizaButton() {
+        const descPost = document.getElementById('desc-post').value;
+        if(descPost.length > 0) {
+            send_post.style.backgroundColor = "white"
+        } else {
+            send_post.style.backgroundColor = "#888888"
+        }
+    }
+</script>
+</html>
