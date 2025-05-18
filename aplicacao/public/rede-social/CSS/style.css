@@ -34,6 +34,7 @@ body, html {
     background-position: center;
     width: 80%;
     height: 25%;
+    cursor: pointer;
 }
 
 #menu-navbar {
@@ -60,6 +61,12 @@ body, html {
     display: flex;
     align-items: center;
     gap: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+#menu-navbar ul li:hover {
+    color: white;
+    font-size: 17px;
 }
 .icon {
     width: 30px;
@@ -72,13 +79,15 @@ body, html {
     display: flex;
     align-items: center;
     gap: 25px;
-    background-color: transparent;
     border: none;
     cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s ease-in;
 }
-
-#foto-perfil {
-    background-image: url("../IMAGE/fotografo-de-retrato-de-advogados_adv-47.jpg");
+#area-perfil:hover {
+    background-color: rgba(43, 42, 42, 0.623);
+}
+.foto-perfil {
     background-position: center;
     background-size: cover;
     border-radius: 50%;
@@ -92,10 +101,10 @@ body, html {
     font-family: "Poppins", sans-serif;
     font-size: 14px;
 }
-#nomeUsuario {
+.nomeUsuario {
     font-weight: 800;
 }
-#nickname {
+.nickname {
     color: #757575;
     font-weight: 700;
 }
@@ -123,10 +132,9 @@ body, html {
     height: 70%;
     width: 90%;
 }
-#foto-perfil-post {
+.post {
     width: 9%;
     height: 47%;
-    background-image: url("../IMAGE/fotografo-de-retrato-de-advogados_adv-47.jpg");
     background-position: center;
     background-size: cover;
     border-radius: 50%;
@@ -257,4 +265,12 @@ body, html {
     font-size: 11px;
     background-color: #b4926b;
     border: none;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+.pessoa-seguir button:hover {
+    transform: scale(1.05);
+    background-color: wheat;
+    color: black;
+
 }

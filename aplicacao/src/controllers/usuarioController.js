@@ -92,8 +92,30 @@ function sugestoesNaoSeguidores(req,res) {
     }
 }
 
+function atualizar(req, res) {
+    const id = req.params.id;
+    const foto = req.file.filename //pegando a foto que vem como file.
+
+    const { nome, nomePerfil, nivel, posicao, email, senha } = req.body;
+    const usuario = { nome, nomePerfil, nivel, posicao, email, senha, foto};
+    console.log("USUARIO CONTROLLER: ",usuario)
+    usuarioModel.atualizar(id, usuario).then(resposta => {
+        if(resposta.affectedRows == 1) {
+            usuarioModel.buscarUsuario(id).then(resposta => {
+                res.status(200).json(resposta);
+            })
+        } else {
+            res.status(401).send("Erro ao dar update")
+        }
+    })
+    .catch(erro => {
+        res.status(401).send("Deu erro", erro)
+    })
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    sugestoesNaoSeguidores
+    sugestoesNaoSeguidores,
+    atualizar
 }

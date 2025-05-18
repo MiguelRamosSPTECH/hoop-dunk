@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/sessao.js"></script>
+    <script src="../../js/perfilUsuario.js" defer></script>
+    <script src="../../js/sessao.js"></script>
+    <link rel="stylesheet" href="../CSS/perfilJogador.css">
+</head>
+<body onload="validarSessao(), carregarPerfil()">
+    <div id="hide"></div>
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <a id="area-logo-hoopdunk" href="../index.html"></a>
+            <div id="menu-navbar">
+                <ul>
+                    <li><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
+                    <li><img class="icon" src="../IMAGE/search-icon.png">EXPLORAR</li>
+                    <li><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
+                    <li><img class="icon" src="../IMAGE/schedule-icon.png">EVENTOS</li>
+                </ul>
+            </div>
+            <a href="./index.html" id="area-perfil">
+                <div class="foto-perfil"></div>
+                <div id="nicknames">
+                    <span class="nomeUsuario"></span>
+                    <span class="nickname"></span>
+                </div>
+            </a>
+        </div>
+        <div id="content-perfil">
+            <div id="container">
+                <div id="content-edit-perfil">
+                    <div id="area-edit-perfil">
+                        <div class="foto-perfil profile"></div>
+                        <div id="infos-perfil">
+                            <div id="info-social">
+                                <span class="nomeUsuario"></span>
+                                <span class="nickname"></span>
+                            </div>
+                            <div id="area-seguidores">
+                                <label><span>0</span> Seguidores</label>
+                                <label><span>0</span> Seguindo</label>
+                            </div>
+                            <div id="area-conhecimento">
+                                <label>Posição: <span id="posicao_game">Armador</span></label>
+                                <label>Nível: <span id="level_player">Federado</span></label>
+                            </div>
+                        </div>
+                        <div id="editar">
+                            <div id="centraliza-botao">
+                                <button id="edit-profile">Editar Perfil</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="posts">
+                    <h3>Infelizmente você ainda não fez nenhum post.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AREA DO MODAL-->
+     <dialog id="modal">
+        <div id="content">
+            <div id="header-modal">
+                <div id="titulo">
+                    <img id="close-modal" src="../IMAGE/close-icon.png">
+                    <h3>Editando perfil</h3>
+                </div>
+                <div id="area-save">
+                    <button onclick="editProfile()">Salvar</button>
+                </div>
+            </div>
+            <div id="body-modal">
+                <div id="area-edit-photo">
+                    <div class="foto-perfil edit"></div>
+                    <input type="file" id="ipt_fotoPerfil" onchange="mudarFoto()" placeholder="Alterar foto">
+                </div>
+                <div class="inputs-2">
+                    <div class="group-input">
+                        <label for="ipt_nome">Nome</label>
+                        <input type="text" id="ipt_nome">
+                    </div>
+                    <div class="group-input">
+                        <label for="ipt_nomePerfil">Nome do perfil</label>
+                        <input type="text" id="ipt_nomePerfil">
+                    </div>
+                </div>
+                <div class="inputs-2">
+                    <div class="group-input">
+                        <label for="select_level">Nível</label>
+                        <select name="" id="select_level">
+                            <option value="#">Escolha seu nível de habilidade</option>
+                            <option value="Iniciante">Iniciante</option>
+                            <option value="Intermediário">Intermediario</option>
+                            <option value="Avançado">Avançado</option>
+                            <option value="Profissional">Profissional</option>
+                        </select>
+                    </div>
+                    <div class="group-input">
+                        <label for="select_position">Posição</label>
+                        <select name="" id="select_position">
+                            <option value="#">Informe sua posição predominante</option>
+                            <option value="Armador">Armador</option>
+                            <option value="Ala-Armador">Ala-Armador</option>
+                            <option value="Ala">Ala</option>
+                            <option value="Pivô">Pivô</option>
+                            <option value="Ala-Pivô">Ala-Pivô</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inputs-1">
+                    <div class="group-input">
+                        <label for="ipt_email">Email</label>
+                        <input type="email" id="ipt_email" minlength="">
+                    </div>
+                </div>
+                <div class="inputs-1">
+                    <div class="group-input">
+                        <label for="ipt_senha">Senha</label>
+                        <input type="password" id="ipt_senha">
+                    </div>
+                </div>
+            </div>
+        </div>
+     </dialog>
+</body>
+</html>

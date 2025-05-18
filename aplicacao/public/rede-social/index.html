@@ -11,7 +11,7 @@
 <body onload="validarSessao(), trazerSugestoesPessoas()">
     <div class="container-all">
         <div id="navbar-lateral">
-            <div id="area-logo-hoopdunk"></div>
+            <a id="area-logo-hoopdunk" href="./index.html"></a>
             <div id="menu-navbar">
                 <ul>
                     <li><img class="icon" src="./IMAGE/home-icon.png">INICIAL</li>
@@ -20,18 +20,18 @@
                     <li><img class="icon" src="./IMAGE/schedule-icon.png">EVENTOS</li>
                 </ul>
             </div>
-            <button id="area-perfil">
-                <div id="foto-perfil"></div>
+            <a href="./perfil-jogador/index.html" id="area-perfil">
+                <div class="foto-perfil"></div>
                 <div id="nicknames">
-                    <span id="nomeUsuario"></span>
-                    <span id="nickname"></span>
+                    <span class="nomeUsuario"></span>
+                    <span class="nickname"></span>
                 </div>
-            </button>
+            </a>
         </div>
         <div id="area-posts">
             <div id="area-send-post">
                 <div id="content-post">
-                    <div id="foto-perfil-post"></div>
+                    <div class="foto-perfil post"></div>
                     <textarea id="desc-post" onkeyup="atualizaButton()" rows="1" placeholder="We’re gonna be championships!"></textarea>
                 </div>
                 <div id="functions-post">
