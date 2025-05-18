@@ -150,7 +150,7 @@ body, html {
 }
 
 #infos-perfil {
-    width: 50%;
+    width: 45%;
     justify-content: center;
     gap: 15px;
     height: 100%;
@@ -193,17 +193,17 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 40%;
     height: 100%;
 }
 #centraliza-botao {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     height: 50%;
     width: 100%;
 }
 #editar button {
-    width: 60%;
+    width: 55%;
     height: 23%;
     border: 2px solid gray;
     background-color: transparent;
@@ -215,11 +215,20 @@ body, html {
     cursor: pointer;
     transition: 0.4s ease;
 }
+#editar #sair-sessao {
+    background-color: #8d0404;
+    width: 36%;
+    border: none;
+}
 #editar button:hover {
     transform: scale(1.03);
     background-color: white;
     border: none;
     color: black;
+}
+#editar #sair-sessao:hover {
+    transform: scale(1.05);
+    color: white;
 }
 
 /* Posts */
