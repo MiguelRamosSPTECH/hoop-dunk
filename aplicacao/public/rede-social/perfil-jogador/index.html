@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../js/sessao.js"></script>
-    <script src="../../js/perfilUsuario.js" defer></script>
     <script src="../../js/sessao.js"></script>
+    <script src="../../js/perfilUsuario.js" defer></script>
     <link rel="stylesheet" href="../CSS/perfilJogador.css">
 </head>
 <body onload="validarSessao(), carregarPerfil()">
@@ -79,6 +78,7 @@
             <div id="body-modal">
                 <div id="area-edit-photo">
                     <div class="foto-perfil edit"></div>
+                    <label for="ipt_fotoPerfil">Alterar foto</label>
                     <input type="file" id="ipt_fotoPerfil" onchange="mudarFoto()" placeholder="Alterar foto">
                 </div>
                 <div class="inputs-2">

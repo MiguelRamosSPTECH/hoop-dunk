@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadras | HoopDunk</title>
+    <script src="../../js/sessao.js"></script>
+    <link rel="stylesheet" href="../CSS/quadras.css">
+    <script src="../../js/quadrasProcess.js" defer></script>
+</head>
+<body onload="validarSessao(), carregarQuadras()">
+    <div id="hide"></div>
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <a id="area-logo-hoopdunk" href="../index.html"></a>
+            <div id="menu-navbar">
+                <ul>
+                    <li><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
+                    <li><img class="icon" src="../IMAGE/search-icon.png">EXPLORAR</li>
+                    <li><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
+                    <li><img class="icon" src="../IMAGE/schedule-icon.png">EVENTOS</li>
+                </ul>
+            </div>
+            <a href="../perfil-jogador/index.html" id="area-perfil">
+                <div class="foto-perfil"></div>
+                <div id="nicknames">
+                    <span class="nomeUsuario"></span>
+                    <span class="nickname"></span>
+                </div>
+            </a>
+        </div>   
+        <div id="content-quadras">
+            <div id="container-quadras">
+                <div id="header-quadras">
+                    <h1>Quadras</h1>
+                    <button id="btn-addQuadra">Adicionar quadra</button>
+                </div>
+                <div id="body-quadras"></div>
+            </div>
+        </div>     
+    </div>
+    <!-- modal -->
+     <dialog id="modal">
+        <div id="content">
+            <div id="header-modal">
+                <div id="titulo">
+                    <img id="close-modal" src="../IMAGE/close-icon.png">
+                    <h3>Adicionando quadra</h3>
+                </div>
+                <div id="area-save">
+                    <button onclick="cadastrarQuadra()">Salvar</button>
+                </div>
+            </div>
+            <div id="body-modal">
+                <div id="area-edit-photo">
+                    <div class="change-photo">
+                        <label for="ipt_fotoQuadra">
+                            <img src="../IMAGE/icon-addPhoto.png" alt="">
+                        </label>
+                        <input type="file" id="ipt_fotoQuadra" onchange="mudarFoto()">
+                    </div>
+                    <div class="foto-quadra edit"></div>
+                </div>
+                <div class="inputs-2">
+                    <div class="group-input">
+                        <label for="ipt_nome">Nome</label>
+                        <input type="text" id="ipt_nome" minlength="10">
+                    </div>
+                    <div class="group-input">
+                        <label for="ipt_localizacao">Localização</label>
+                        <input type="text" id="ipt_localizacao" minlength="15">
+                    </div>
+                </div>
+                <div class="inputs-1">
+                    <div class="group-input">
+                        <label for="ipt_desc">Descrição</label>
+                        <textarea name="" id="ipt_desc" minlength="20"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </dialog>
+</body>
+</html>

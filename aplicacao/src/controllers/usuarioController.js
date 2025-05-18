@@ -98,7 +98,7 @@ function atualizar(req, res) {
 
     const { nome, nomePerfil, nivel, posicao, email, senha } = req.body;
     const usuario = { nome, nomePerfil, nivel, posicao, email, senha, foto};
-    console.log("USUARIO CONTROLLER: ",usuario)
+
     usuarioModel.atualizar(id, usuario).then(resposta => {
         if(resposta.affectedRows == 1) {
             usuarioModel.buscarUsuario(id).then(resposta => {

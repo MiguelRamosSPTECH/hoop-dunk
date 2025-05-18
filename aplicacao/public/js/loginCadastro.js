@@ -33,7 +33,6 @@ function cadastrar() {
             if(resposta.ok) {
                 alert("Login efetuado com sucesso!")
 
-                // substituir por uma div dps de notificação
                 setTimeout(() => window.location = "../site/login.html", 2000)
             } else {
                 const msgErro = await resposta.json()
