@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/sessao.js"></script>
+    <link rel="stylesheet" href="../CSS/descQuadra.css">
+    <script src="../../js/quadrasProcess.js"></script>
+</head>
+<body onload="validarSessao(), detalhesQuadra()">
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <a id="area-logo-hoopdunk" href="../index.html"></a>
+            <div id="menu-navbar">
+                <ul>
+                    <li><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
+                    <li><img class="icon" src="../IMAGE/search-icon.png">EXPLORAR</li>
+                    <li><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
+                    <li><img class="icon" src="../IMAGE/schedule-icon.png">EVENTOS</li>
+                </ul>
+            </div>
+            <a href="../perfil-jogador/index.html" id="area-perfil">
+                <div class="foto-perfil"></div>
+                <div id="nicknames">
+                    <span class="nomeUsuario"></span>
+                    <span class="nickname"></span>
+                </div>
+            </a>
+        </div>
+        <div id="body-desc-quadra">
+            <div id="header">
+                <h2>DESCRICAO QUADRA</h2>
+                <button id="participar_quadra">Participar</button>
+            </div>
+            <div id="foto-quadra"></div>
+            <div id="infos-quadra">
+                <div id="principais-infos">
+                    <div id="dados-importantes">
+                        <h3 id="nome_quadra"></h3>
+                        <span id="evento_rolando"></span>
+                    </div>
+                    <button>Detalhes do jogo</button>
+                </div>
+                <div id="other-infos">
+                    <label>Localização: <span id="localizacao_quadra"></span></label>
+                    <label>Nível: <span id="nivel_quadra"></span></label>
+                    <div id="descricao">
+                        <label>Descrição: </label>
+                        <div id="descricao_quadra"></div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        <!-- jogadores -->
+        <div id="area-explorar">
+            <div id="area-pessoas">
+                <div id="jogadores_andQtd">
+                    <h3>JOGADORES</h3> <span id="qtdJogadores"></span>
+                </div>
+
+                <!-- for com as pessoa q ele n segue -->
+                <div id="jogadores-para-seguir"></div>
+            </div>
+        </div>         
+    </div>
+</body>
+</html>

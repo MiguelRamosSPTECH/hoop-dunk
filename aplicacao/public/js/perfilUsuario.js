@@ -18,9 +18,7 @@ function mudarFoto() {
     const foto = document.getElementsByClassName('edit')[0];
     const fotoEscolhida = ipt_fotoPerfil.files[0]; //retorna array de "fotos" por isso pego na primeira posicao
     if(fotoEscolhida) {
-        console.log(fotoEscolhida)
         const imgURL = URL.createObjectURL(fotoEscolhida) //transforma em uma url local para colocar a foto
-        console.log(imgURL);
         foto.style.backgroundImage = `url('${imgURL}')`
     }
 }

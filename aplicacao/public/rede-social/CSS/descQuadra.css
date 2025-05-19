@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@font-face {
+    font-family: "ZingRust";
+    src: url("../../site/FONTS/zing.rust-demo-base.otf") format('opentype');
+}
+
+@font-face {
+    font-family: "IntroRust";
+    src: url("../FONTS/IntroRust.otf") format('opentype');
+}
+
+body, html {
+    margin: 0;
+    left: 0;
+    font-family: "Poppins", sans-serif;
+}
+.container-all {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: #121212;
+}
+
+/* navbar lateral */
+#navbar-lateral {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 25%;
+    height: 100%;
+}
+
+#area-logo-hoopdunk {
+    background-image: url("../IMAGE/ofc-logo-hoopdunk.png");
+    background-size: cover;
+    background-position: center;
+    width: 80%;
+    height: 25%;
+    cursor: pointer;
+}
+
+#menu-navbar {
+    color: white;
+    height: 55%;
+    width: 80%;
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+#menu-navbar ul {
+    list-style: none;
+    font-family: "IntroRust", sans-serif;
+    color: #cdcdcd;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    gap: 40px;
+    padding: 0;
+}
+#menu-navbar ul li {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+#menu-navbar ul li:hover {
+    color: white;
+    font-size: 17px;
+}
+.icon {
+    width: 30px;
+}
+
+#area-perfil {
+    height: 20%;
+    width: 80%;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s ease-in;
+}
+#area-perfil:hover {
+    background-color: rgba(43, 42, 42, 0.623);
+}
+.foto-perfil {
+    background-image: url("../IMAGE/fotografo-de-retrato-de-advogados_adv-47.jpg");
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 45%;
+    width: 22%;
+}
+#nicknames {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+.nomeUsuario {
+    font-weight: 800;
+}
+.nickname {
+    color: #757575;
+    font-weight: 700;
+}
+
+
+/* body */
+#body-desc-quadra {
+    width: 50%;
+    height: 100%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+#header {
+    display: flex;
+    justify-content: space-around;
+    gap: 200px;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    border-bottom: 1px solid gray;
+}
+#header h2 {
+    color: white;
+    font-family: "ZingRust", sans-serif;
+}
+#header button {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    background-color: #0559d4;
+    color: white;
+    border: none;
+    outline: none;
+    width: 18%;
+    height: 38%;
+    border-radius: 25px;
+    transition: 0.4s ease;
+    cursor: pointer;
+}
+#header button:hover {
+    transform: scale(1.04);
+}
+#foto-quadra {
+    width: 100%;
+    height: 40%;
+    background-position: center;
+    background-size: cover;
+}
+#infos-quadra {
+    height: 49.5%;
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+}
+#principais-infos {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    text-transform: uppercase;
+    height: 20%;
+    color: white;
+}
+#principais-infos button {
+    border: none;
+    outline: none;
+    background-color: #eaad59;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    width: 25%;
+    height: 40%;
+    border-radius: 25px;
+    cursor: pointer;
+
+}
+#dados-importantes {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+}
+#evento_rolando {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    font-size: 12px;
+    font-weight: 800;
+    color: #c1ff72;
+}
+#evento_rolando img {
+    width: 11%;
+}
+#other-infos {
+    align-self: center;
+    height: 80%;
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 15px;
+}
+#other-infos label {
+    font-weight: 800;
+}
+#other-infos span {
+    color: #cdcdcd;
+    font-weight: 400;
+}
+#descricao_quadra {
+    color: #cdcdcd;
+    height: 130px;
+    font-weight: 400;
+}
+
+/* jogadores quadra */
+#area-explorar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    height: 100%;
+    gap: 25px;
+}
+#area-pessoas {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#area-pessoas h3{
+    color: #cdcdcd;
+    font-family: "IntroRust", sans-serif;
+}
+#jogadores-para-seguir {
+    height: 100%;
+    width: 100%;
+}
+#jogadores-para-seguir h4 {
+    color: red;
+    font-weight: 700;
+    text-align: center;
+}
+.pessoa-seguir {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    height: 15%;
+}
+.pessoa-seguir img {
+    width: 18%;
+    height: 60%;
+    border-radius: 50%;
+}
+.info-pessoa {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+}
+.info-pessoa label {
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+}
+.info-pessoa span {
+    font-size: 12px;
+    color: gray;
+    font-weight: 700;
+}
+.pessoa-seguir button {
+    border-radius: 15px;    
+    width: 22%;
+    height: 35%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    background-color: #b4926b;
+    border: none;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+.pessoa-seguir button:hover {
+    transform: scale(1.05);
+    background-color: wheat;
+    color: black;
+
+}
+#jogadores_andQtd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#qtdJogadores {
+    color: #0559d4;
+    font-weight: 800;
+    font-size: 20px;
+}

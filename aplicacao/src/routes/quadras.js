@@ -5,12 +5,16 @@ var router = express.Router();
 var quadraController = require("../controllers/quadraController");
 
 //Recebendo os dados do html e direcionando para a função cadastrar de quadraController.js
-router.post("/cadastrar", upload.single('foto'), function (req, res) {
+router.post("/:id/cadastrar", upload.single('foto'), function (req, res) {
     quadraController.cadastrar(req, res);
 })
 
 router.get("/buscar", function(req,res) {
     quadraController.buscar(req, res);
+})
+
+router.get('/:id/detalhes', function(req,res) {
+    quadraController.buscarPeloId(req,res);
 })
 
 
