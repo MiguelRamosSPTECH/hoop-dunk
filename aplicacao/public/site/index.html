@@ -5,13 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Site | HoopDunk</title>
     <link rel="stylesheet" href="./CSS/style.css">
+    <script src="./logicaSite.js" defer></script>
 </head>
 <body>
     <div id="container-all">
+
+        <!-- MENU LATERAL -->
+        <div id="menu-lateral">
+            <ul>
+                <li><a href="#container-all">Home</a></li>
+            </ul>
+        </div>
+
         <!-- header -->
         <div id="header">
             <div id="navbar">
-                <button><img src="./IMAGE/menu-hamburguer.png"></button>
+                <button><img id="menu-hamburguer" onclick="carregarMenuLateral()" src="./IMAGE/menu-hamburguer.png"></button>
                 <a href="./login.html">ENTRAR</a>
             </div>
             <div id="area-logo">

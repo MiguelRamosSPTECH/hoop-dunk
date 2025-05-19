@@ -20,6 +20,27 @@ body, html {
     gap: 0px;
 }
 
+/* Menu lateral */
+#menu-lateral {
+    position: fixed;
+    display: none;
+    width: 15%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.89);
+    color: white;
+    padding: 20px;
+    padding-top: 70px;
+}
+#menu-lateral ul li {
+    font-family: "Poppins", sans-serif;
+    list-style: none;
+}
+#menu-lateral ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
 /* HEADER */
 #header {
     width: 100%;
@@ -48,6 +69,7 @@ body, html {
     background-color: transparent;
     border: none;
     cursor: pointer;
+    z-index: 1;
 }
 #navbar button img {
     width: 50%;

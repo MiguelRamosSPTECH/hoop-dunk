@@ -8,7 +8,11 @@ function cadastrar(req, res) {
 
     quadraModel.cadastrar(quadra, idUsuario).then(resposta => {
         if(resposta.affectedRows == 1) {
-            res.status(200).send("Quadra cadastrada")
+            quadraModel.participarQuadra(idUsuario, quadra, 'criador').then(resposta => {
+                if(resposta.affectedRows == 1) {
+                    res.status(200).send("Quadra criada")
+                }
+            })
         } else {
             res.status(401).send("Erro ao inserir quadra")
         }
@@ -42,9 +46,13 @@ function buscarPeloId(req,res) {
 function usuarioParticipar(req,res) {
     const idUsuario = req.params.id;
     const idQuadra = req.params.idQuadra;
-    quadraModel.participarQuadra(idUsuario, idQuadra).then(resposta => {
+    quadraModel.participarQuadra(idUsuario, idQuadra, 'jogador').then(resposta => {
         if(resposta.affectedRows == 1) {
-            res.status(200).send("AGORA VOCê É UM JOGADOR DA QUADRA.");
+            quadraModel.atualizarNivelQuadra(idQuadra).then(resposta => {
+                if(resposta.affectedRows == 1) {
+                    res.status(200).send("AGORA VOCê É UM JOGADOR DA QUADRA.");
+                }
+            })
         }
     })
 

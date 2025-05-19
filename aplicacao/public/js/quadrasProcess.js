@@ -88,7 +88,7 @@ function carregarQuadras() {
 function detalhesQuadra() {
     const params = new URLSearchParams(window.location.search); //pega url que estou e pega os parametros dps do ?
     const id = params.get('id');
-    const nomeCriador = JSON.parse(sessionStorage.DADOS_USUARIO)[0].nome;
+    const nomeUsuario = JSON.parse(sessionStorage.DADOS_USUARIO)[0].nome;
     fetch(`/quadras/${id}/detalhes`, {
         method: "GET",
     })
@@ -106,7 +106,7 @@ function detalhesQuadra() {
         qtdJogadores.innerHTML = dadosQuadra[0].qtdJogadores;
 
         const areaJogadores = document.getElementById('jogadores-para-seguir')
-        // mostrando jogadores cuzao do caralho       
+
         for(let i=0;i<dadosQuadra.length;i++) {
             if(dadosQuadra[i].fotoJogador == null) {
                 dadosQuadra[i].fotoJogador = `sem_imagem_avatar.png`
@@ -119,10 +119,10 @@ function detalhesQuadra() {
                             <label>${dadosQuadra[i].nomeJogador}</label>
                             <span>@${dadosQuadra[i].perfilJogador}</span>
                         </div>
-                        ${dadosQuadra[i].nomeJogador == nomeCriador ? "" : "<button>Seguir</button>"}
+                        ${dadosQuadra[i].nomeJogador == nomeUsuario ? "" : "<button>Seguir</button>"}
                     </div> 
                 `  
-                if(nomeCriador == dadosQuadra[i].nomeJogador) {
+                if(nomeUsuario == dadosQuadra[i].nomeJogador) {
                     isJogador = true;
                 }
             } else {
@@ -133,7 +133,7 @@ function detalhesQuadra() {
         if(dadosQuadra[0].eventoRolando == 1) {
             evento_rolando.innerHTML = `<img src="../../rede-social/IMAGE/icon-evento-rolando.png"> EVENTO ROLANDO`
         }
-        if(nomeCriador == dadosQuadra[0].nomeJogador && dadosQuadra[0].tipoJogador == "criador" || isJogador) {
+        if(isJogador) {
             participar_quadra.style.display = "none"
         }
     })

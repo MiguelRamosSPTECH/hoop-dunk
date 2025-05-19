@@ -1,10 +1,17 @@
 var database = require("../database/config")
 
+    let data = new Date().toLocaleString();
+    data = data.replace(" ", "");
+    data = data.replaceAll("/", "-");
+    data = data.split(",");
+    const horas = data[0].split("-");
+    let dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`
+
 function cadastrar(quadra ,idUser) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", quadra);
 
     var instrucaoSql = `
-        INSERT INTO quadra (nome, localizacao, descricao, foto, nivel) VALUES ('${quadra.nome}', '${quadra.localizacao}', '${quadra.descricao}', '${quadra.foto}', (select nivel from usuario where id = ${idUser}));
+        INSERT INTO quadra (nome, localizacao, descricao, foto, nivel, created_at) VALUES ('${quadra.nome}', '${quadra.localizacao}', '${quadra.descricao}', '${quadra.foto}', (select nivel from usuario where id = ${idUser}), '${dataFormatada}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);    
@@ -44,7 +51,7 @@ function buscaPeloId(id) {
         ) as eventoRolando,
             (
                 select count(*) from quadraJogadores qj2
-                where q.id = qj.idQuadra
+                where q.id = qj2.idQuadra
             ) as qtdJogadores
     from quadra q
     left join quadraJogadores qj on
@@ -58,19 +65,48 @@ function buscaPeloId(id) {
     return database.executar(instrucaoSql);
 }
 
-function participarQuadra(idUsuario, idQuadra) {
+function participarQuadra(idUsuario, idQuadra, tipoJogador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscar():");
     
-    var instrucaoSql = `
-        INSERT INTO quadraJogadores VALUES (${idQuadra}, ${idUsuario}, 'jogador');
-    `;
+    var instrucaoSql = ``
+    if(tipoJogador == 'criador') {
+        instrucaoSql = `
+            insert into quadraJogadores(idQuadra, idJogador, tipoJogador) values( 
+            (select id from quadra
+            order by created_at desc
+            limit 1),
+            ${idUsuario}, 'criador');        
+        `
+    } else {
+        instrucaoSql = `
+            INSERT INTO quadraJogadores VALUES (${idQuadra}, ${idUsuario}, '${tipoJogador}');
+        `;
+    }
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
+}
+
+function atualizarNivelQuadra(idQuadra) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscar():");
+
+    var instrucaoSql = `
+        update quadra set nivel = (
+        select nivel from usuario
+        inner join quadraJogadores qj on
+        qj.idJogador = usuario.id
+        where qj.idQuadra = quadra.id
+        group by nivel
+        order by count(nivel) desc limit 1)
+        where id =${idQuadra};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);     
 }
 
 module.exports = {
     cadastrar,
     buscar,
     buscaPeloId,
-    participarQuadra
+    participarQuadra,
+    atualizarNivelQuadra
 }
