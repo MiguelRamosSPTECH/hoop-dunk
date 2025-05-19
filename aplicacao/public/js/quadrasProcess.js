@@ -94,6 +94,7 @@ function detalhesQuadra() {
     })
     .then(async resposta => {
         let jogadoresQuadra = ``
+        let isJogador = false;
         const dadosQuadra = await resposta.json();
         const fotoQuadra = document.getElementById('foto-quadra');
 
@@ -121,6 +122,9 @@ function detalhesQuadra() {
                         ${dadosQuadra[i].nomeJogador == nomeCriador ? "" : "<button>Seguir</button>"}
                     </div> 
                 `  
+                if(nomeCriador == dadosQuadra[i].nomeJogador) {
+                    isJogador = true;
+                }
             } else {
                 jogadoresQuadra = `<h4>Nenhum jogador registrado na quadra</h4>`
             }
@@ -129,9 +133,26 @@ function detalhesQuadra() {
         if(dadosQuadra[0].eventoRolando == 1) {
             evento_rolando.innerHTML = `<img src="../../rede-social/IMAGE/icon-evento-rolando.png"> EVENTO ROLANDO`
         }
-        if(nomeCriador == dadosQuadra[0].nomeJogador && dadosQuadra[0].tipoJogador == "criador") {
+        if(nomeCriador == dadosQuadra[0].nomeJogador && dadosQuadra[0].tipoJogador == "criador" || isJogador) {
             participar_quadra.style.display = "none"
         }
     })
     
+}
+
+function participarQuadra() {
+    const id = JSON.parse(sessionStorage.DADOS_USUARIO)[0].id;
+    const params = new URLSearchParams(window.location.search); //pega url que estou e pega os parametros dps do ?
+    const idQuadra = params.get('id');
+    fetch(`/quadras/${id}/${idQuadra}/participar`, {
+        method: "POST"
+    })
+    .then(async resposta => {
+        if(resposta.ok) {
+            const msg = await resposta.text();
+            alert(msg)
+            location.reload();            
+        }
+
+    })
 }

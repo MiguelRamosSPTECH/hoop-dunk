@@ -39,9 +39,20 @@ function buscarPeloId(req,res) {
         }
     })
 }
+function usuarioParticipar(req,res) {
+    const idUsuario = req.params.id;
+    const idQuadra = req.params.idQuadra;
+    quadraModel.participarQuadra(idUsuario, idQuadra).then(resposta => {
+        if(resposta.affectedRows == 1) {
+            res.status(200).send("AGORA VOCê É UM JOGADOR DA QUADRA.");
+        }
+    })
+
+}
 
 module.exports = {
     cadastrar,
     buscar,
-    buscarPeloId
+    buscarPeloId,
+    usuarioParticipar
 }
