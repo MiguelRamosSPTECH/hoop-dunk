@@ -43,6 +43,7 @@ function buscarPeloId(req,res) {
         }
     })
 }
+
 function usuarioParticipar(req,res) {
     const idUsuario = req.params.id;
     const idQuadra = req.params.idQuadra;

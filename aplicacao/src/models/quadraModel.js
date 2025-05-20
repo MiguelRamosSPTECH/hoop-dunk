@@ -28,12 +28,6 @@ function buscar() {
 }
 
 function buscaPeloId(id) {
-    let data = new Date().toLocaleString();
-    data = data.replace(" ", "");
-    data = data.replaceAll("/", "-");
-    data = data.split(",");
-    const horas = data[0].split("-");
-    let dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`
     var instrucaoSql = `
     select 
     q.nome as nomeQuadra,
@@ -97,7 +91,7 @@ function atualizarNivelQuadra(idQuadra) {
         where qj.idQuadra = quadra.id
         group by nivel
         order by count(nivel) desc limit 1)
-        where id =${idQuadra};
+        where id = ${idQuadra};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);     

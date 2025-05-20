@@ -1,9 +1,20 @@
 var database = require("../database/config")
 
+    let data = new Date().toLocaleString();
+    data = data.replace(" ", "");
+    data = data.replaceAll("/", "-");
+    data = data.split(",");
+    const horas = data[0].split("-");
+    let dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`
+
 function autenticar(perfil, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", perfil, senha)
     var instrucaoSql = `
-        SELECT * FROM usuario WHERE nomePerfil = '${perfil}' AND senha = '${senha}';
+        select * ,
+        (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
+        (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo
+        from usuario u
+        where u.nomePerfil = '${perfil}' and u.senha = '${senha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -43,11 +54,16 @@ function atualizar(id, usuario) {
     return database.executar(instrucaoSql); 
 }
 
-function buscarUsuario(id) {
-console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUsuario():", id);
+function buscarUsuario(idSeguidor, idSeguido) {
+console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUsuario():", idSeguidor, idSeguido);
     
     let instrucaoSql = `
-    SELECT * FROM usuario WHERE id = ${id};
+        select *,
+        (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
+        (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo,
+		(select 1 from seguidores where idSeguidor = ${idSeguidor} and idSeguido = ${idSeguido}) as voceSegue
+        from usuario u
+        where id = ${idSeguido};
     `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);     
@@ -58,15 +74,30 @@ function naoSeguidores(id) {
 
         var instrucaoSql = 
         `
-            select id, nome, nomePerfil from usuario 
+            select distinct u.id, u.nome, u.nomePerfil, u.foto from usuario u
             left join seguidores s on
-            usuario.id = s.idSeguidor
-            where s.idSeguidor is null
-            and s.idSeguido is null
-            and usuario.id <> ${id}
-            limit 6;
+            u.id = s.idSeguido
+            where u.id <> ${id}
+            and u.id not in (
+            select idSeguidor from seguidores where idSeguido = ${id}
+            UNION
+            select idSeguido from seguidores where idSeguidor = ${id}
+            );
         `
     return database.executar(instrucaoSql);
+}
+
+function seguirJogador(idSeguidor, idSeguido, tipoAcao) {
+console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function seguirJogador():", idSeguidor, idSeguido);
+    
+let instrucaoSql = ``;
+    if(tipoAcao == "pararSeguir") {
+        instrucaoSql = `delete from seguidores where idSeguidor = ${idSeguidor} and idSeguido = ${idSeguido};`
+    } else {
+        instrucaoSql = `insert into seguidores(idSeguidor, idSeguido, dtHora) values (${idSeguidor}, ${idSeguido}, '${dataFormatada}');`
+    }
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);       
 }
 
 module.exports = {
@@ -74,5 +105,6 @@ module.exports = {
     autenticar,
     cadastrar,
     atualizar,
-    buscarUsuario
+    buscarUsuario,
+    seguirJogador
 };

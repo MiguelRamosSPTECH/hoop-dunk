@@ -108,13 +108,10 @@ function detalhesQuadra() {
         const areaJogadores = document.getElementById('jogadores-para-seguir')
 
         for(let i=0;i<dadosQuadra.length;i++) {
-            if(dadosQuadra[i].fotoJogador == null) {
-                dadosQuadra[i].fotoJogador = `sem_imagem_avatar.png`
-            }
             if(dadosQuadra[i].nomeJogador != null) {
                 jogadoresQuadra+=`
                     <div class="pessoa-seguir">
-                        <img src="../../assets/imgs/${dadosQuadra[i].fotoJogador}" alt="">
+                        <img src="../../assets/imgs/${dadosQuadra[i].fotoJogador ||`sem_imagem_avatar.png`}" alt="">
                         <div class="info-pessoa">
                             <label>${dadosQuadra[i].nomeJogador}</label>
                             <span>@${dadosQuadra[i].perfilJogador}</span>

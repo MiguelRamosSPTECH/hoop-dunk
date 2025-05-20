@@ -23,15 +23,67 @@ function mudarFoto() {
     }
 }
 
+function preencherDadosUsuario(dados) {
+    name_user.innerHTML = dados.nome || "Nome não definido";
+    nickname_user.innerHTML = dados.nomePerfil || "Nickname não definido";
+    foto_user.style.backgroundImage = `url('../../assets/imgs/${dados.foto || 'sem_imagem_avatar.png'}')`;  
+    posicao_game.innerHTML = dados.posicao || "Posição não definida";
+    level_player.innerHTML = dados.nivel || "Nível não definido";
+    seguidores.innerHTML = dados.seguidores || 0;
+    seguindo.innerHTML = dados.seguindo || 0;
+}
+
 function carregarPerfil() {
     const dadosJson = JSON.parse(sessionStorage.DADOS_USUARIO)[0];
-    ipt_nome.value = dadosJson.nome
-    ipt_nomePerfil.value = dadosJson.nomePerfil;
-    select_level.value = dadosJson.nivel;
-    select_position.value = dadosJson.posicao;
-    ipt_email.value = dadosJson.email;
-    posicao_game.innerHTML = dadosJson.posicao;
-    level_player.innerHTML = dadosJson.nivel;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('idUsuario');
+    if(id) {
+        fetch(`/usuarios/${dadosJson.id}/${id}/buscarPeloid`, {
+            method: "GET"
+        })
+        .then(async resposta => {
+            if(resposta.ok) {
+                const divButtons = document.getElementById('centraliza-botao');
+                const dados = await resposta.json(); 
+                preencherDadosUsuario(dados[0]);   
+
+                // botao para seguir/deixar de seguir
+                divButtons.innerHTML = `
+                    <button onclick="seguirJogador(${dadosJson.id},${dados[0].id}, this.innerText)">${dados[0].voceSegue ? "Deixar de seguir" : "Seguir"}</button>
+                `
+            } else {
+                console.error("Erro ao buscar dados do usuário");
+                return;                    
+            }
+        }) 
+    } else {
+        preencherDadosUsuario(dadosJson);       
+    }
+}
+
+function seguirJogador(idSeguidor, idSeguido, tipoAcao) {
+    if  ( 
+            (idSeguidor != null && idSeguido != null) && 
+            (idSeguidor != undefined && idSeguido != undefined) &&
+            tipoAcao != null && tipoAcao != undefined
+        ) {
+            if(tipoAcao == "Deixar de seguir") {
+                tipoAcao = "pararSeguir"
+            }
+        fetch(`/usuarios/${idSeguidor}/${idSeguido}/${tipoAcao}/seguir`, {
+            method:"POST"
+        })
+        .then(async resposta => {
+            if(resposta.ok) {
+                const msg = await resposta.json();
+                console.log(msg);
+                location.reload() 
+                divButtons.innerHTML = `
+                    <button onclick="seguirJogador(${dadosJson.id},${dados[0].id})">Deixar de Seguir</button>
+                `               
+            }
+        })
+    }
 }
 
 function editProfile() {

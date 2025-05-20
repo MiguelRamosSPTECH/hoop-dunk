@@ -113,9 +113,33 @@ function atualizar(req, res) {
     })
 }
 
+function buscarPeloid(req,res) {
+    const { idSeguidor, idSeguido } = req.params;
+    usuarioModel.buscarUsuario(idSeguidor, idSeguido).then(resposta => {
+        res.status(200).json(resposta);
+    })
+    .catch(erro => {
+        res.status(401).send("Deu erro", erro);
+    })
+}
+
+function seguirJogador(req,res) {
+    const { idSeguidor, idSeguido, tipoAcao } = req.params;
+    usuarioModel.seguirJogador(idSeguidor, idSeguido, tipoAcao).then(resposta => {
+        if(resposta.affectedRows == 1) {
+            res.status(200).json({mensagem: "OK"})
+        }
+    })
+    .catch(erro => {
+        res.status(401).json({mensagem: `Erro ao seguir este usuário: ${erro}`})
+    })
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     sugestoesNaoSeguidores,
-    atualizar
+    atualizar,
+    buscarPeloid,
+    seguirJogador
 }

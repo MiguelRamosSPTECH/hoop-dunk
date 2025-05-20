@@ -20,5 +20,12 @@ router.post("/autenticar", function (req, res) {
 router.get("/:id/nao-seguidores", function(req,res) {
     usuarioController.sugestoesNaoSeguidores(req,res);
 })
+router.get("/:idSeguidor/:idSeguido/buscarPeloId", function(req,res) {
+    usuarioController.buscarPeloid(req,res);
+})
+
+router.post('/:idSeguidor/:idSeguido/:tipoAcao/seguir', function(req,res) {
+    usuarioController.seguirJogador(req,res)
+})
 
 module.exports = router;

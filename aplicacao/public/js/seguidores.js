@@ -6,12 +6,13 @@ function trazerSugestoesPessoas() {
     })
     .then(async resposta => {
         if(resposta.ok) {
+            let usuariosNaoSeguir = ``
             let divPessoaSeguir = document.getElementById('para-seguir');
             const usuarios = await resposta.json();
             usuarios.forEach(usuario  => {
-                divPessoaSeguir.innerHTML+= `
-                    <div class="pessoa-seguir">
-                        <img src="IMAGE/foto-ishowspeed.jpg" alt="">
+                usuariosNaoSeguir+= `
+                    <div onclick="window.location = './perfil-jogador/index.html?idUsuario=${usuario.id}'" class="pessoa-seguir">
+                        <img src="../../assets/imgs/${usuario.foto || `sem_imagem_avatar.png`}" alt="">
                         <div class="info-pessoa">
                             <label>${usuario.nome}</label>
                             <span>@${usuario.nomePerfil}</span>
@@ -20,6 +21,7 @@ function trazerSugestoesPessoas() {
                     </div>
                 `
             });
+            divPessoaSeguir.innerHTML = usuariosNaoSeguir;
         }
     })
 }
