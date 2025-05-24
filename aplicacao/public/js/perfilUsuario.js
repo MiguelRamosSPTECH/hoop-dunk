@@ -24,41 +24,46 @@ function mudarFoto() {
 }
 
 function preencherDadosUsuario(dados) {
-    name_user.innerHTML = dados.nome || "Nome não definido";
-    nickname_user.innerHTML = dados.nomePerfil || "Nickname não definido";
+    name_user.innerHTML = dados.nome;
+    nickname_user.innerHTML = `@${dados.nomePerfil}`;
     foto_user.style.backgroundImage = `url('../../assets/imgs/${dados.foto || 'sem_imagem_avatar.png'}')`;  
     posicao_game.innerHTML = dados.posicao || "Posição não definida";
     level_player.innerHTML = dados.nivel || "Nível não definido";
     seguidores.innerHTML = dados.seguidores || 0;
     seguindo.innerHTML = dados.seguindo || 0;
+
+    // inputs
+    ipt_nome.value = dados.nome;
+    ipt_nomePerfil.value = dados.nomePerfil
+    select_level.value = dados.nivel
+    select_position.value = dados.posicao
+    ipt_email.value = dados.email
 }
 
 function carregarPerfil() {
     const dadosJson = JSON.parse(sessionStorage.DADOS_USUARIO)[0];
     const params = new URLSearchParams(window.location.search);
     const id = params.get('idUsuario');
-    if(id) {
-        fetch(`/usuarios/${dadosJson.id}/${id}/buscarPeloid`, {
+        fetch(`/usuarios/${dadosJson.id}/${id ||false}/buscarPeloid`, {
             method: "GET"
         })
         .then(async resposta => {
             if(resposta.ok) {
                 const divButtons = document.getElementById('centraliza-botao');
                 const dados = await resposta.json(); 
+                console.log("dados: ",dados);
                 preencherDadosUsuario(dados[0]);   
+                if(dados[1] != undefined) {
+                    divButtons.innerHTML = `
+                        <button onclick="seguirJogador(${dadosJson.id},${dados[0].id}, this.innerText)">${dados[0].voceSegue ? "Deixar de seguir" : "Seguir"}</button>
+                    `
+                }
 
-                // botao para seguir/deixar de seguir
-                divButtons.innerHTML = `
-                    <button onclick="seguirJogador(${dadosJson.id},${dados[0].id}, this.innerText)">${dados[0].voceSegue ? "Deixar de seguir" : "Seguir"}</button>
-                `
             } else {
                 console.error("Erro ao buscar dados do usuário");
                 return;                    
             }
         }) 
-    } else {
-        preencherDadosUsuario(dadosJson);       
-    }
 }
 
 function seguirJogador(idSeguidor, idSeguido, tipoAcao) {
@@ -106,6 +111,7 @@ function editProfile() {
     .then(async resposta => {
         if(resposta.ok) {
             const dadosAtualizados = await resposta.json();
+            console.log("DADOS ATUALIZADOS: ", dadosAtualizados);
             sessionStorage.DADOS_USUARIO = JSON.stringify(dadosAtualizados);
             modal.close()
             location.reload()

@@ -101,21 +101,28 @@ function atualizar(req, res) {
 
     usuarioModel.atualizar(id, usuario).then(resposta => {
         if(resposta.affectedRows == 1) {
-            usuarioModel.buscarUsuario(id).then(resposta => {
-                res.status(200).json(resposta);
+            usuarioModel.buscarUsuario(id, false).then(resposta => {
+                if(resposta.length > 0) {
+                    res.status(200).json(resposta);
+                }
             })
         } else {
             res.status(401).send("Erro ao dar update")
         }
     })
     .catch(erro => {
-        res.status(401).send("Deu erro", erro)
+        res.status(401).send("Deu erro")
     })
 }
 
 function buscarPeloid(req,res) {
     const { idSeguidor, idSeguido } = req.params;
     usuarioModel.buscarUsuario(idSeguidor, idSeguido).then(resposta => {
+        if(idSeguido != "false"){
+            resposta.push({
+                mensagem: "proprioUsuario"
+            }) //gambiarra
+        }
         res.status(200).json(resposta);
     })
     .catch(erro => {

@@ -56,15 +56,24 @@ function atualizar(id, usuario) {
 
 function buscarUsuario(idSeguidor, idSeguido) {
 console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarUsuario():", idSeguidor, idSeguido);
-    
-    let instrucaoSql = `
-        select *,
-        (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
-        (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo,
-		(select 1 from seguidores where idSeguidor = ${idSeguidor} and idSeguido = ${idSeguido}) as voceSegue
-        from usuario u
-        where id = ${idSeguido};
-    `
+    let instrucaoSql = ``
+    if(idSeguido == "false" || idSeguido == false) { //dependendo da onde vem ele vem como texto e como boolean msm
+        instrucaoSql = `
+            select * ,
+            (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
+            (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo
+            from usuario u
+            where u.id = ${idSeguidor};    
+        `
+    } else {
+            instrucaoSql = `select *,
+            (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
+            (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo,
+            (select 1 from seguidores where idSeguidor = ${idSeguidor} and idSeguido = ${idSeguido}) as voceSegue
+            from usuario u
+            where id = ${idSeguido};
+        `
+    }
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);     
 }

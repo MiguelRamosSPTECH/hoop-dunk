@@ -17,7 +17,7 @@ router.get('/:id/detalhes', function(req,res) {
     quadraController.buscarPeloId(req,res);
 })
 
-router.post('/:id/:idQuadra/participar', function(req,res) {
+router.post('/:id/:idQuadra/:tipoAcao/participar', function(req,res) {
     quadraController.usuarioParticipar(req,res);
 })
 

@@ -47,11 +47,12 @@ function buscarPeloId(req,res) {
 function usuarioParticipar(req,res) {
     const idUsuario = req.params.id;
     const idQuadra = req.params.idQuadra;
-    quadraModel.participarQuadra(idUsuario, idQuadra, 'jogador').then(resposta => {
+    const tipoAcao = req.params.tipoAcao;
+    quadraModel.participarQuadra(idUsuario, idQuadra, 'jogador', tipoAcao).then(resposta => {
         if(resposta.affectedRows == 1) {
             quadraModel.atualizarNivelQuadra(idQuadra).then(resposta => {
                 if(resposta.affectedRows == 1) {
-                    res.status(200).send("AGORA VOCê É UM JOGADOR DA QUADRA.");
+                    res.status(200).send("ACAO CONFIRMADA");
                 }
             })
         }

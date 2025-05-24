@@ -131,7 +131,8 @@ function detalhesQuadra() {
             evento_rolando.innerHTML = `<img src="../../rede-social/IMAGE/icon-evento-rolando.png"> EVENTO ROLANDO`
         }
         if(isJogador) {
-            participar_quadra.style.display = "none"
+            participar_quadra.innerText = "Sair"
+            participar_quadra.style.backgroundColor = `red`
         }
     })
     
@@ -141,13 +142,15 @@ function participarQuadra() {
     const id = JSON.parse(sessionStorage.DADOS_USUARIO)[0].id;
     const params = new URLSearchParams(window.location.search); //pega url que estou e pega os parametros dps do ?
     const idQuadra = params.get('id');
-    fetch(`/quadras/${id}/${idQuadra}/participar`, {
+    let tipoAcao = participar_quadra.innerText;
+    fetch(`/quadras/${id}/${idQuadra}/${tipoAcao}/participar`, {
         method: "POST"
     })
     .then(async resposta => {
         if(resposta.ok) {
-            const msg = await resposta.text();
-            alert(msg)
+            console.log(resposta);
+            const dados = await resposta.text();
+            alert(dados)
             location.reload();            
         }
 

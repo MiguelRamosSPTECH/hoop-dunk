@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../CSS/jogos.css">
+    <link rel="stylesheet" href="../CSS/alerta.css">
+    <script src="../../js/sessao.js"></script>
+    <script src="../../js/jogoProcess.js" defer></script>
+    <script src="../../js/alertas.js"></script>
+</head>
+<body onload="validarSessao(), carregarQuadrasJogo(), carregarJogos()">
+    <div id="hide"></div>
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <a id="area-logo-hoopdunk" href="./index.html"></a>
+            <div id="menu-navbar">
+                <ul>
+                    <li><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
+                    <li><img class="icon" src="../IMAGE/search-icon.png">EXPLORAR</li>
+                    <li><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
+                    <li><img class="icon" src="../IMAGE/schedule-icon.png">EVENTOS</li>
+                </ul>
+            </div>
+            <a href="../perfil-jogador/index.html" id="area-perfil">
+                <div class="foto-perfil"></div>
+                <div id="nicknames">
+                    <span class="nomeUsuario"></span>
+                    <span class="nickname"></span>
+                </div>
+            </a>
+        </div>     
+        <div class="content-jogos">
+            <div id="header">
+                <div id="top-infos">
+                    <h1>Jogos</h1>
+                    <button id="addJogo">Adicionar Jogo</button>
+                </div>
+                    <ul class="header-table">
+                        <li id="nome">Nome</li>
+                        <li id="data">Data</li>
+                        <li id="local">Local</li>
+                    </ul>                 
+            </div>
+            <div id="body-jogos">
+                <table id="table_jogos"></table>
+            </div>
+        </div>           
+    </div>
+
+    <!-- area do modal -->
+     <dialog id="modal">
+        <div id="content">
+            <div id="header-modal">
+                <div id="titulo">
+                    <img id="close-modal" src="../IMAGE/close-icon.png">
+                    <h3>Adicionando Jogo</h3>
+                </div>
+                <div id="area-save">
+                    <button onclick="cadastrarJogo()">Salvar</button>
+                </div>
+            </div>
+            <div id="body-modal">
+                <div class="inputs-2">
+                    <div class="group-input">
+                        <label for="ipt_nome_jogo">Nome</label>
+                        <input type="text" id="ipt_nome_jogo">
+                    </div>
+                    <div class="group-input">
+                        <label for="select_quadras">Quadra</label>
+                        <select name="" id="select_quadras">
+                            <option value="#">Escolha a quadra que será feita o jogo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="inputs-2">
+                    <div class="group-input">
+                        <label for="select_hora_inicio">Horario Início</label>
+                        <input type="datetime-local" name="" id="ipt_hora_inicio">
+                    </div>
+                    <div class="group-input">
+                        <label for="select_hora_final">Horario final</label>
+                        <input type="datetime-local" name="" id="ipt_hora_final">
+                    </div>
+                </div>
+                <div class="inputs-1">
+                    <div class="group-input">
+                        <label for="select_modalidade">Modalidade</label>
+                        <select name="" id="select_modalidade">
+                            <option value="#">Escolha seu nível de habilidade</option>
+                            <option value="1v1">1v1</option>
+                            <option value="2v2">2v2</option>
+                            <option value="3v3">3v3</option>
+                            <option value="Quadrão">Quadrão</option>
+                        </select>
+                    </div>
+                </div>
+                    <div class="group-input" id="desc">
+                        <label for="ipt_desc">Descrição</label>
+                        <textarea name="" id="ipt_desc"></textarea>
+                    </div>               
+            </div>
+        </div>
+     </dialog>
+</body>
+</html>

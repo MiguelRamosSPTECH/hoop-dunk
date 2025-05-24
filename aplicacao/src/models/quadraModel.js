@@ -59,22 +59,27 @@ function buscaPeloId(id) {
     return database.executar(instrucaoSql);
 }
 
-function participarQuadra(idUsuario, idQuadra, tipoJogador) {
+function participarQuadra(idUsuario, idQuadra, tipoJogador, tipoAcao) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscar():");
     
     var instrucaoSql = ``
-    if(tipoJogador == 'criador') {
-        instrucaoSql = `
-            insert into quadraJogadores(idQuadra, idJogador, tipoJogador) values( 
-            (select id from quadra
-            order by created_at desc
-            limit 1),
-            ${idUsuario}, 'criador');        
-        `
+
+    if(tipoAcao == "Sair") {
+        instrucaoSql = `DELETE FROM quadraJogadores WHERE idJogador = ${idUsuario}`;
     } else {
-        instrucaoSql = `
-            INSERT INTO quadraJogadores VALUES (${idQuadra}, ${idUsuario}, '${tipoJogador}');
-        `;
+        if(tipoJogador == 'criador') {
+            instrucaoSql = `
+                insert into quadraJogadores(idQuadra, idJogador, tipoJogador) values( 
+                (select id from quadra
+                order by created_at desc
+                limit 1),
+                ${idUsuario}, 'criador');        
+            `
+        } else {
+            instrucaoSql = `
+                INSERT INTO quadraJogadores VALUES (${idQuadra}, ${idUsuario}, '${tipoJogador}');
+            `;
+        }
     }
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
