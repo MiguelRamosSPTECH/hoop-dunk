@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Jogo | HoopDunk</title>
+    <link rel="stylesheet" href="../CSS/descJogo.css">
+    <script src="../../js/sessao.js"></script>
+</head>
+<body onload="validarSessao()">
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <a id="area-logo-hoopdunk" href="../index.html"></a>
+            <div id="menu-navbar">
+                <ul>
+                    <li onclick="window.location='../index.html'"><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
+                    <li><img class="icon" src="../IMAGE/search-icon.png">EXPLORAR</li>
+                    <li onclick="window.location='./index.html'"><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
+                    <li onclick="window.location='../jogos/index.html'"><img class="icon" src="../IMAGE/schedule-icon.png">JOGOS</li>
+                </ul>
+            </div>
+            <a href="../perfil-jogador/index.html" id="area-perfil">
+                <div class="foto-perfil"></div>
+                <div id="nicknames">
+                    <span class="nomeUsuario"></span>
+                    <span class="nickname"></span>
+                </div>
+            </a>
+        </div> 
+        <!-- body desc jogo -->
+        <div id="body-desc-jogo">
+            <div id="header">
+                <h2>DESCRICAO DO JOGO</h3>
+                <button>Participar</button>
+            </div>
+            <div id="body-info-jogo">
+                <div id="jogo-rolando">
+                    <span>JOGO ROLANDO</span>
+                    <img src="../IMAGE/icon-evento-rolando.png"> 
+                </div>
+                <div id="desc-jogo">
+                    <div id="important-desc">
+                        <div id="foto-quadra-jogo"></div>
+                        <div id="infos">
+                            <div class="group-infos">
+                                <h3>RACHA DOS CRIAS</h3>
+                                <label>Nível do jogo: <span>Profissional</span></label>
+                                <label>Modalidade: <span>Quadrão</span></label>
+                            </div>
+                            <div class="group-infos">
+                                <h3>HORÁRIOS</h3>
+                                <label>Começo do jogo: <span>21/10/2025, 15h</span></label>
+                                <label>Final do jogo: <span>21/10/2025, 21h</span></label>
+                            </div>      
+                            <div class="group-infos">
+                                <h3>LOCAL</h3>
+                                <label>Localização: <span><strong>Quadra da 67</strong>, Jardim Robru</span></label>
+                            </div>                                                    
+                        </div>
+                    </div>
+                        <div class="group-infos">
+                            <h3>OBSERVAÇÕES</h3>
+                            <span style="color: white;">vxcvx</span>
+                        </div>                    
+                </div>
+            </div>
+        </div>   
+        
+        <!-- jogadores -->
+        <div id="area-explorar">
+            <div id="area-pessoas">
+                <div id="jogadores_andQtd">
+                    <h3>JOGADORES</h3> <span id="qtdJogadores"></span>
+                </div>
+
+                <!-- for com as pessoa q ele n segue -->
+                <div id="jogadores-para-seguir"></div>
+            </div>
+        </div>         
+        
+    </div>
+</body>
+</html>

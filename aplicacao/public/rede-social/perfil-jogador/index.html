@@ -6,6 +6,7 @@
     <title>Document</title>
     <script src="../../js/sessao.js"></script>
     <script src="../../js/perfilUsuario.js" defer></script>
+    <script src="../../js/seguidores.js" defer></script>
     <link rel="stylesheet" href="../CSS/perfilJogador.css">
 </head>
 <body onload="validarSessao(), carregarPerfil()">
@@ -15,10 +16,10 @@
             <a id="area-logo-hoopdunk" href="../index.html"></a>
             <div id="menu-navbar">
                 <ul>
-                    <li><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
+                    <li onclick="window.location='../index.html'"><img class="icon" src="../IMAGE/home-icon.png">INICIAL</li>
                     <li><img class="icon" src="../IMAGE/search-icon.png">EXPLORAR</li>
-                    <li><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
-                    <li><img class="icon" src="../IMAGE/schedule-icon.png">EVENTOS</li>
+                    <li onclick="window.location='./index.html'"><img class="icon" src="../IMAGE/man-icon.png">QUADRAS</li>
+                    <li onclick="window.location='../jogos/index.html'"><img class="icon" src="../IMAGE/schedule-icon.png">JOGOS</li>
                 </ul>
             </div>
             <a href="./index.html" id="area-perfil">
@@ -39,7 +40,7 @@
                                 <span id="name_user" class="nomeUsuario"></span>
                                 <span id="nickname_user" class="nickname"></span>
                             </div>
-                            <div id="area-seguidores">
+                            <div id="area-seguidores" onclick="abrirFecharModal(1)">
                                 <label><span id="seguidores"></span> Seguidores</label>
                                 <label><span id="seguindo"></span> Seguindo</label>
                             </div>
@@ -50,7 +51,7 @@
                         </div>
                         <div id="editar">
                             <div id="centraliza-botao">
-                                <button id="edit-profile">Editar Perfil</button>
+                                <button class="openModal" onclick="abrirFecharModal(0)">Editar Perfil</button>
                                 <button id="sair-sessao" onclick="limparSessao()">Sair</button>
                             </div>
                         </div>
@@ -64,11 +65,11 @@
     </div>
 
     <!-- AREA DO MODAL-->
-     <dialog id="modal">
+     <dialog id="modal" class="modal">
         <div id="content">
             <div id="header-modal">
                 <div id="titulo">
-                    <img id="close-modal" src="../IMAGE/close-icon.png">
+                    <img onclick="abrirFecharModal(0)" id="close-modal" src="../IMAGE/close-icon.png">
                     <h3>Editando perfil</h3>
                 </div>
                 <div id="area-save">
@@ -129,5 +130,20 @@
             </div>
         </div>
      </dialog>
+
+     <!-- modal seguidores/seguindo -->
+
+     <dialog id="modal-seguidores" class="modal">
+        <div id="header-modal-seguidores">
+            <img id="close-modal-seguidores" onclick="abrirFecharModal(1)" src="../IMAGE/close-icon.png">
+            <div id="select-seguidores">
+                <button id="btn-seguidores" onclick="trazerPessoas(this)">Seguidores</button>
+                <button onclick="trazerPessoas(this)">Seguindo</button>
+            </div>
+        </div>
+        <!-- for das pessoa que ele segue/quem segue ele -->
+        <div id="body-modal-seguidores"></div>
+     </dialog>
+
 </body>
 </html>

@@ -28,4 +28,8 @@ router.post('/:idSeguidor/:idSeguido/:tipoAcao/seguir', function(req,res) {
     usuarioController.seguirJogador(req,res)
 })
 
+router.get('/:idUsuario/:tipoAcao/listarSeguidores', function(req,res) {
+    usuarioController.listarSeguidores(req,res);
+})
+
 module.exports = router;

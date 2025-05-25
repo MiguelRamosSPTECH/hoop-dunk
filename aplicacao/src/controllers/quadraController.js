@@ -57,7 +57,6 @@ function usuarioParticipar(req,res) {
             })
         }
     })
-
 }
 
 module.exports = {

@@ -142,11 +142,25 @@ function seguirJogador(req,res) {
     })
 }
 
+function listarSeguidores(req,res) {
+    const { idUsuario, tipoAcao } = req.params;
+    usuarioModel.listarSeguidores(idUsuario, tipoAcao).then(resposta => {
+        if(resposta.length > 0) {
+            res.status(200).json(resposta);
+        } else {
+            res.status(401).send(tipoAcao == "Seguindo" ? "Você ainda não segue ninguém" : "Você não possui seguidores");
+        }
+    })
+    
+
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     sugestoesNaoSeguidores,
     atualizar,
     buscarPeloid,
-    seguirJogador
+    seguirJogador,
+    listarSeguidores
 }

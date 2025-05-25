@@ -11,9 +11,10 @@ var database = require('../database/config')
 function buscar() {
     console.log("ACESSEI O JOGO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscar():");
     var instrucaoSql = `
-        SELECT e.nome, e.modalidade, e.nivelJogo, e.dtHoraComeco, q.localizacao FROM evento e
+        SELECT e.id, e.nome, e.modalidade, e.nivelJogo, e.dtHoraComeco, q.localizacao FROM evento e
         INNER JOIN quadra q ON
-        e.idQuadra = q.id;
+        e.idQuadra = q.id
+        order by e.dtHoraComeco desc;
     `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);    
     return database.executar(instrucaoSql);    
@@ -30,6 +31,7 @@ function cadastrarJogo(jogo) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);    
     return database.executar(instrucaoSql);
 }
+
 
 function verificarDisponibilidadeJogo(jogo) {
 

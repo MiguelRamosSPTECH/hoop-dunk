@@ -34,7 +34,7 @@ async function carregarJogos() {
                     </td>
                 <td>${trataData}</td>
                 <td id="localizacao-jogo">${jogo.localizacao}</td>
-                <td><button>Ver detalhes</button></td>
+                <td><button onclick="window.location='detalhes.html?idJogo=${jogo.id}'">Ver detalhes</button></td>
             </tr>
             `
         })

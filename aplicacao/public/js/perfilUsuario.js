@@ -1,18 +1,16 @@
-const buttonEdit = document.getElementById('edit-profile')
-const closeModal = document.getElementById('close-modal')
-const modal = document.getElementById('modal');
+
+const modal = document.getElementsByClassName('modal');
 const fundoModal = document.getElementById('hide');
 
-// area do modal
-buttonEdit.addEventListener('click', () => {
-    hide.style.display = "block"
-    modal.showModal()
-})
-
-closeModal.addEventListener('click', ()=> {
-    hide.style.display = "none"
-    modal.close();
-} )
+function abrirFecharModal(indice) {
+    if(modal[indice].open) {
+        modal[indice].close();
+        fundoModal.style.display = "none"
+    } else {
+        modal[indice].showModal();
+        fundoModal.style.display = "block"
+    }
+}
 
 function mudarFoto() {
     const foto = document.getElementsByClassName('edit')[0];
@@ -44,14 +42,14 @@ function carregarPerfil() {
     const dadosJson = JSON.parse(sessionStorage.DADOS_USUARIO)[0];
     const params = new URLSearchParams(window.location.search);
     const id = params.get('idUsuario');
-        fetch(`/usuarios/${dadosJson.id}/${id ||false}/buscarPeloid`, {
+    
+        fetch(`/usuarios/${dadosJson.id}/${id || false}/buscarPeloid`, {
             method: "GET"
         })
         .then(async resposta => {
             if(resposta.ok) {
                 const divButtons = document.getElementById('centraliza-botao');
                 const dados = await resposta.json(); 
-                console.log("dados: ",dados);
                 preencherDadosUsuario(dados[0]);   
                 if(dados[1] != undefined) {
                     divButtons.innerHTML = `
@@ -75,6 +73,7 @@ function seguirJogador(idSeguidor, idSeguido, tipoAcao) {
             if(tipoAcao == "Deixar de seguir") {
                 tipoAcao = "pararSeguir"
             }
+            
         fetch(`/usuarios/${idSeguidor}/${idSeguido}/${tipoAcao}/seguir`, {
             method:"POST"
         })
@@ -82,7 +81,7 @@ function seguirJogador(idSeguidor, idSeguido, tipoAcao) {
             if(resposta.ok) {
                 const msg = await resposta.json();
                 console.log(msg);
-                location.reload() 
+                location.reload(); 
                 divButtons.innerHTML = `
                     <button onclick="seguirJogador(${dadosJson.id},${dados[0].id})">Deixar de Seguir</button>
                 `               

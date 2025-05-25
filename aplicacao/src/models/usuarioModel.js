@@ -1,3 +1,4 @@
+
 var database = require("../database/config")
 
     let data = new Date().toLocaleString();
@@ -109,11 +110,40 @@ let instrucaoSql = ``;
     return database.executar(instrucaoSql);       
 }
 
+
+function listarSeguidores(idUsuario, tipoAcao) {
+  console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarSeguidores():");
+  let instrucaoSql = ``
+  if(tipoAcao == "Seguindo") {
+    instrucaoSql = `
+        select seguido.id, seguido.nome, seguido.nomePerfil, seguido.foto from usuario seguido
+        inner join seguidores s1 on
+        seguido.id = s1.idSeguido
+        inner join usuario seguidor on
+        s1.idSeguidor = seguidor.id
+        where seguidor.id = ${idUsuario};
+  `    
+  } else {
+    instrucaoSql = `
+        select seguidor.id, seguidor.nome, seguidor.nomePerfil, seguidor.foto from usuario seguido
+        inner join seguidores s1 on
+        seguido.id = s1.idSeguido
+        inner join usuario seguidor on
+        s1.idSeguidor = seguidor.id
+        where seguido.id = ${idUsuario};
+    `
+  } 
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+
+}
+
 module.exports = {
     naoSeguidores,
     autenticar,
     cadastrar,
     atualizar,
     buscarUsuario,
-    seguirJogador
+    seguirJogador,
+    listarSeguidores
 };
