@@ -6,8 +6,9 @@
     <title>Detalhes do Jogo | HoopDunk</title>
     <link rel="stylesheet" href="../CSS/descJogo.css">
     <script src="../../js/sessao.js"></script>
+    <script src="../../js/jogoProcess.js"></script>
 </head>
-<body onload="validarSessao()">
+<body onload="validarSessao(), detalhesJogo(), verificarJogo()">
     <div class="container-all">
         <div id="navbar-lateral">
             <a id="area-logo-hoopdunk" href="../index.html"></a>
@@ -31,36 +32,33 @@
         <div id="body-desc-jogo">
             <div id="header">
                 <h2>DESCRICAO DO JOGO</h3>
-                <button>Participar</button>
+                <button id="participar_jogo" onclick="participarJogo(this)">Participar</button>
             </div>
             <div id="body-info-jogo">
-                <div id="jogo-rolando">
-                    <span>JOGO ROLANDO</span>
-                    <img src="../IMAGE/icon-evento-rolando.png"> 
-                </div>
+                <div id="jogo-rolando"></div>
                 <div id="desc-jogo">
                     <div id="important-desc">
-                        <div id="foto-quadra-jogo"></div>
+                        <div id="foto_quadra_jogo"></div>
                         <div id="infos">
                             <div class="group-infos">
-                                <h3>RACHA DOS CRIAS</h3>
-                                <label>Nível do jogo: <span>Profissional</span></label>
-                                <label>Modalidade: <span>Quadrão</span></label>
+                                <h3 id="nome_jogo"></h3>
+                                <label>Nível do jogo: <span id="nivel_jogo">Profissional</span></label>
+                                <label>Modalidade: <span id="modalidade_jogo">Quadrão</span></label>
                             </div>
                             <div class="group-infos">
                                 <h3>HORÁRIOS</h3>
-                                <label>Começo do jogo: <span>21/10/2025, 15h</span></label>
-                                <label>Final do jogo: <span>21/10/2025, 21h</span></label>
+                                <label>Começo do jogo: <span id="comeco_jogo"> 21/10/2025, 15h</span></label>
+                                <label>Final do jogo: <span id="final_jogo"> 21/10/2025, 21h</span></label>
                             </div>      
                             <div class="group-infos">
                                 <h3>LOCAL</h3>
-                                <label>Localização: <span><strong>Quadra da 67</strong>, Jardim Robru</span></label>
+                                <label>Localização: <span id="localizacao_jogo"><strong>Quadra da 67</strong>, Jardim Robru</span></label>
                             </div>                                                    
                         </div>
                     </div>
                         <div class="group-infos">
                             <h3>OBSERVAÇÕES</h3>
-                            <span style="color: white;">vxcvx</span>
+                            <span id="observacao_jogo" style="color: white;"></span>
                         </div>                    
                 </div>
             </div>
