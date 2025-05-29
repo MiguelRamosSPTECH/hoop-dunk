@@ -12,6 +12,17 @@ btnCloseModal.addEventListener('click', ()=> {
     backgroundModal.style.display = "none"
 })
 
+
+function trataData(data) {
+    if(data[0] == "") {
+        return;
+    }
+    let trataHora = data[2].split("T");
+    let dataTratada = `${data[0]}-${data[1]}-${trataHora[0]} ${trataHora[1]}:00`
+    let segundos = (Number(trataHora[1].split(":")[0])*3600) + (Number(trataHora[1].split(":")[1]) *60)
+    return [dataTratada, segundos];
+}
+
 async function carregarJogos() {
     fetch('/jogos/buscar', {
         method: "GET"
@@ -63,17 +74,8 @@ function carregarQuadrasJogo() {
     })
 }
 
-function trataData(data) {
-    if(data[0] == "") {
-        return;
-    }
-    let trataHora = data[2].split("T");
-    let dataTratada = `${data[0]}-${data[1]}-${trataHora[0]} ${trataHora[1]}:00`
-    let segundos = (Number(trataHora[1].split(":")[0])*3600) + (Number(trataHora[1].split(":")[1]) *60)
-    return [dataTratada, segundos];
-}
 
-function cadastrarJogo() { 
+function validacoesJogo(idJogo) {
     let idUsuarioCriador = JSON.parse(sessionStorage.DADOS_USUARIO)[0].id;
     let nomeJogo = ipt_nome_jogo.value;
     let quadraSelecionada = select_quadras.value;
@@ -81,26 +83,25 @@ function cadastrarJogo() {
     let iptDesc = ipt_desc.value;
     let horaComeco = (ipt_hora_inicio.value).split("-");
     let horaFinal = (ipt_hora_final.value).split("-");
-    const dtComeco = trataData(horaComeco)
+    const dtComeco = trataData(horaComeco);
     const dtFinal = trataData(horaFinal);
 
     let dataAtual = new Date().toLocaleDateString().split("/");
-
     if(nomeJogo == "" || quadraSelecionada == "#" || horaComeco[0] == "" || horaFinal[0] == "" || slctModalidade == "" || iptDesc == "") {
         gerarAlerta("Preencha todos os campos!")
     } else if(nomeJogo.length < 6 || nomeJogo.length > 25) {
         gerarAlerta("Nome deve conter entre 6 a 25 caracteres!")
-        // isso vai ser chato de resolver, por que eu tenho que validar se a data é valida porém ta dando b.o caso eu escolha outro mÊs
-    } else if((Number(dataAtual[2]) > Number(horaComeco[0]) || Number(dataAtual[2]) != Number(horaComeco[0])) || Number(dataAtual[1]) > Number(horaComeco[1]) || Number(dataAtual[0]) > Number(horaComeco[2].split("T")[0])) {
+    } else if(Number(dataAtual[2]) > Number(horaComeco[0]) || (Number(dataAtual[1]) == Number(horaComeco[1]) && Number(dataAtual[0]) > Number(horaComeco[2].split("T")[0])) || Number(dataAtual[1]) > Number(horaComeco[1])) {
         gerarAlerta("Insira uma data válida")
     } else if (horaComeco[2].split("T")[0] != horaFinal[2].split("T")[0] || horaComeco[1] != horaFinal[1] || horaComeco[0] != horaFinal[0]) {
         gerarAlerta("O jogo deve ser no mesmo dia!")
     } else if(dtFinal[1] - dtComeco[1] < 7200) {
         gerarAlerta("O jogo deve durar no mínimo 2 horas!")
-    } else if(iptDesc.length < 30 || iptDesc.length > 150) {
-        gerarAlerta("Descrição do jogo deve conter entre 30 a 150 caracteres!")
+    } else if(iptDesc.length < 30 || iptDesc.length > 300) {
+        gerarAlerta("Descrição do jogo deve conter entre 30 a 300 caracteres!")
     } else {
         const jogo = {
+            id: idJogo,
             nome: nomeJogo,
             modalidade: slctModalidade,
             idUsuario: idUsuarioCriador,
@@ -109,13 +110,19 @@ function cadastrarJogo() {
             idQuadra: Number(quadraSelecionada),
             observacao: iptDesc
         }
+        return jogo;
+     }
+}
 
+function cadastrarJogo() { 
+    const canProceed = validacoesJogo(false);
+    if(canProceed != undefined) {
         fetch(`/jogos/cadastrar`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify(jogo)
+            body: JSON.stringify(canProceed)
         })
         .then(async resposta => {
             if(resposta.ok) {
@@ -125,18 +132,19 @@ function cadastrarJogo() {
                 const msgErro = await resposta.text()
                 gerarAlerta(msgErro);
             }
-        })
-    }   
+        }) 
+    }  
 }
 
 function detalhesJogo() {
     const params = new URLSearchParams(window.location.search)
     const id = params.get('idJogo');
     const nomeUsuario = JSON.parse(sessionStorage.DADOS_USUARIO)[0].nome;
+    const idUsuario = JSON.parse(sessionStorage.DADOS_USUARIO)[0].id;
     if(id == null) {
         window.location = `index.html`
     } else {
-        fetch(`/jogos/${id}/detalhesJogo`, {
+        fetch(`/jogos/${id}/${idUsuario}/detalhesJogo`, {
             method: "GET"
         })
         .then(async resposta => {
@@ -157,13 +165,13 @@ function detalhesJogo() {
             dadosJogo.forEach(jogador => {
                 if(jogador.nomeJogador != null) {
                     jogadores+=`
-                        <div class="pessoa-seguir">
+                        <div class="pessoa-seguir" onclick="window.location='../perfil-jogador/index.html${jogador.idJogador == idUsuario ? "" : `?idUsuario=${jogador.idJogador}`}'">
                             <img src="../../assets/imgs/${jogador.fotoJogador ||`sem_imagem_avatar.png`}" alt="">
                             <div class="info-pessoa">
                                 <label>${jogador.nomeJogador}</label>
                                 <span>@${jogador.nomePerfilJogador}</span>
                             </div>
-                            ${jogador.nomeJogador == nomeUsuario ? "" : "<button>Seguir</button>"}
+                            ${jogador.idJogador == idUsuario ? "" : `<button>${jogador.voceSegue == 1 ? `Seguindo` : "Seguir"}</button>`}
                         </div>                     
                     `                    
                 } else {
@@ -173,7 +181,7 @@ function detalhesJogo() {
                 if(jogador.nomeJogador == nomeUsuario) {
                     if(jogador.tipoJogador == "criador") {
                         participar_jogo.style.display = "none"
-                        header.innerHTML+=`<button id="editar_jogo" onclick="editarJogo()">Editar</button>`
+                        header.innerHTML+=`<button id="editar_jogo" onclick="editarJogoModal(${dadosJogo[0].idJogo})">Editar</button>`
                     } else {
                         isJogador = true;
                         participar_jogo.innerText = `Sair`
@@ -184,6 +192,53 @@ function detalhesJogo() {
             divJogadores.innerHTML = jogadores;
         })
     }
+}
+
+function editarJogoModal(idJogo) {
+    let modalEdit = document.getElementById('modalEdit');
+    if(modalEdit.open) {
+        modalEdit.close()
+        hide.style.display = 'none'
+    } else {
+        modalEdit.showModal()
+        hide.style.display = 'block'
+        fetch(`/jogos/${idJogo}/buscarPorId`, {
+            method: "GET"
+        })
+        .then(async resposta => {
+            const dadosJogo = await resposta.json();
+            ipt_nome_jogo.value = dadosJogo[0].NomeJogo;
+            select_quadras.value = dadosJogo[0].idQuadra;
+            ipt_hora_inicio.value = dadosJogo[0].dtHoraComeco
+            ipt_hora_final.value = dadosJogo[0].dtHoraEncerramento
+            select_modalidade.value = dadosJogo[0].ModalidadeJogo
+            ipt_desc.value = dadosJogo[0].descJogo;
+        })
+    }
+}
+
+function editJogo() {
+    const params = new URLSearchParams(window.location.search);
+    const idJogo = Number(params.get("idJogo"));
+    const canProceed = validacoesJogo(idJogo);
+    
+        fetch(`/jogos/editJogo`, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify(canProceed)
+        })
+        .then(async resposta => {
+            if(resposta.ok) {
+                gerarAlerta("Jogo Atualizado com sucesso!", true);
+                setTimeout(() => location.reload() ,2000)
+            } else {
+                const msgErro = await resposta.text()
+                gerarAlerta(msgErro);
+            }
+        })      
+
 }
 
 function participarJogo(tipoAcao) {
@@ -212,6 +267,7 @@ function participarJogo(tipoAcao) {
 function verificarJogo() {
     const params = new URLSearchParams(window.location.search)
     const id = params.get('idJogo');
+    console.log(id)
     fetch(`/jogos/${id}/${false}/verJogoAgora`, {
         method: "GET"
     })

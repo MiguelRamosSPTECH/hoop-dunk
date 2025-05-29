@@ -10,7 +10,7 @@ function cadastrar(req, res) {
         if(resposta.affectedRows == 1) {
             quadraModel.participarQuadra(idUsuario, quadra, 'criador').then(resposta => {
                 if(resposta.affectedRows == 1) {
-                    res.status(200).send("Quadra criada")
+                    res.status(200).send("Quadra criada com sucesso!")
                 }
             })
         } else {
@@ -34,8 +34,9 @@ function buscar(req, res) {
 }
 
 function buscarPeloId(req,res) {
+    const idUsuario = req.params.idUsuario;
     const id = req.params.id;
-    quadraModel.buscaPeloId(id).then(resposta => {
+    quadraModel.buscaPeloId(id, idUsuario).then(resposta => {
         if(resposta.length > 0) {
             res.status(200).json(resposta);
         } else {

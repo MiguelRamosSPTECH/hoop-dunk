@@ -137,8 +137,8 @@ body, html {
 #header #top-infos button  {
     background-color: #eaad59;
     font-family: "Poppins", sans-serif;
-    font-weight: 800;
-    height: 30%;
+    font-weight: 600;
+    height: 35%;
     width: 20%;
     border: none;
     outline: none;
@@ -147,6 +147,7 @@ body, html {
     color: white;
     transition: 0.4s ease;
     cursor: pointer;
+
 }
 
 #header button:hover {

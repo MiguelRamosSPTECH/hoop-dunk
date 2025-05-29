@@ -1,3 +1,4 @@
+
 const buttonOpen = document.getElementById('btn-addQuadra')
 const modal = document.getElementById('modal')
 const hide = document.getElementById('hide');
@@ -28,22 +29,35 @@ function cadastrarQuadra() {
     formData.append("localizacao", ipt_localizacao.value);
     formData.append("foto", ipt_fotoQuadra.files[0])
     formData.append("descricao", ipt_desc.value);
+    if(formData.get('foto') == "undefined") {
+        gerarAlerta('Insira uma foto da quadra!')
+    } else if(formData.get('nome').length < 10 || formData.get('nome').length > 25) {
+        gerarAlerta('Nome da quadra deve ter entre 10 e 25 caracteres')
+    } else if(formData.get('localizacao').length < 10 || formData.get('localizacao') > 50) {
+        gerarAlerta('Localização deve conter de 10 a 50 caracteres')
+    } else if(formData.get('descricao').length < 45) {
+        gerarAlerta('Descrição muito curta')
+    } else if(formData.get('descricao').length > 300) {
+        gerarAlerta("Descrição muito longa, máximo: 300 caracteres")
+    } else {
+        fetch(`/quadras/${idUser}/cadastrar`, {
+            method: "POST",
+            body: formData
+        })
+        .then(async resposta => {
+            if(resposta.ok) {
+                const msg = await resposta.text();
+                gerarAlerta(msg, true);
+                setTimeout(()=>
+                    location.reload()
+                ,2000)
+            } else {
+                const msgErro = await resposta.json();
+                console.log("ERRo", msgErro);
+            }
+        })
+    }
 
-    fetch(`/quadras/${idUser}/cadastrar`, {
-        method: "POST",
-        body: formData
-    })
-    .then(async resposta => {
-        if(resposta.ok) {
-            const msg = await resposta.text();
-            modal.close()
-            location.reload();
-            console.log(msg);
-        } else {
-            const msgErro = await resposta.json();
-            console.log("ERRo", msgErro);
-        }
-    })
 
 }
 
@@ -81,15 +95,13 @@ function carregarQuadras() {
     })
 }
 
-// function updateNivelQuadra(id) {
-//     fetch('/atualizarNivel')
-// }
 
 function detalhesQuadra() {
     const params = new URLSearchParams(window.location.search); //pega url que estou e pega os parametros dps do ?
     const id = params.get('id');
     const nomeUsuario = JSON.parse(sessionStorage.DADOS_USUARIO)[0].nome;
-    fetch(`/quadras/${id}/detalhes`, {
+    const idUsuario = JSON.parse(sessionStorage.DADOS_USUARIO)[0].id
+    fetch(`/quadras/${id}/${idUsuario}/detalhes`, {
         method: "GET",
     })
     .then(async resposta => {
@@ -109,14 +121,15 @@ function detalhesQuadra() {
 
         for(let i=0;i<dadosQuadra.length;i++) {
             if(dadosQuadra[i].nomeJogador != null) {
+                
                 jogadoresQuadra+=`
-                    <div class="pessoa-seguir">
+                    <div onclick="window.location='../perfil-jogador/index.html${dadosQuadra[i].idJogador == idUsuario ? "" : `?idUsuario=${dadosQuadra[i].idJogador}`}'" class="pessoa-seguir">
                         <img src="../../assets/imgs/${dadosQuadra[i].fotoJogador ||`sem_imagem_avatar.png`}" alt="">
                         <div class="info-pessoa">
                             <label>${dadosQuadra[i].nomeJogador}</label>
                             <span>@${dadosQuadra[i].perfilJogador}</span>
                         </div>
-                        ${dadosQuadra[i].nomeJogador == nomeUsuario ? "" : "<button>Seguir</button>"}
+                        ${dadosQuadra[i].idJogador == idUsuario ? "" : `<button>${dadosQuadra[i].voceSegue == 1 ? `Seguindo` : "Seguir"}</button>`}
                     </div> 
                 `  
                 if(nomeUsuario == dadosQuadra[i].nomeJogador) {
@@ -155,4 +168,27 @@ function participarQuadra() {
         }
 
     })
+}
+
+function verificarJogo() {
+    const params = new URLSearchParams(window.location.search)
+    const idQuadra = params.get('id');
+    fetch(`/jogos/${false}/${idQuadra}/verJogoAgora`, {
+        method: "GET"
+    })
+    .then(async resposta => {
+        if(resposta.ok) {
+            const retornoJogo = await resposta.json();
+            if(retornoJogo.length == 0) {
+               console.log("Jogo não rolou ainda") 
+            } else {
+                evento_rolando.innerHTML = `
+                    <img src="../IMAGE/icon-evento-rolando.png">   
+                    <span>JOGO ROLANDO</span>                     
+                `
+                btn_desc.innerHTML =  `<button onclick="window.location='../jogos/detalhes.html?idJogo=${retornoJogo[0].jogoId}'">Detalhes do jogo</button>`
+            }
+        }
+    })
+    setTimeout(() => verificarJogo(), 5000);
 }

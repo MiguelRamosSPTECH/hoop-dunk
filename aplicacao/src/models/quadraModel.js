@@ -1,13 +1,17 @@
 var database = require("../database/config")
 
-    let data = new Date().toLocaleString();
-    data = data.replace(" ", "");
-    data = data.replaceAll("/", "-");
-    data = data.split(",");
-    const horas = data[0].split("-");
-    let dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`
+    let dataFormatada;
+    function formataData() {
+        let data = new Date().toLocaleString();
+        data = data.replace(" ", "");
+        data = data.replaceAll("/", "-");
+        data = data.split(",");
+        const horas = data[0].split("-");
+        dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`        
+    }
 
 function cadastrar(quadra ,idUser) {
+    formataData()
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", quadra);
 
     var instrucaoSql = `
@@ -27,26 +31,27 @@ function buscar() {
     return database.executar(instrucaoSql); 
 }
 
-function buscaPeloId(id) {
+function buscaPeloId(id, idUsuario) {
     var instrucaoSql = `
     select 
+    q.id as idQuadra,
     q.nome as nomeQuadra,
     q.nivel as nivelQuadra,
     q.localizacao as localizacaoQuadra,
     q.descricao as descricaoQuadra,
     q.foto as fotoQuadra,
+    u.id as idJogador, 
     u.nome as nomeJogador,
     u.nomePerfil as perfilJogador,
     qj.tipoJogador as tipoJogador,
     u.foto as fotoJogador,
-        (select 1 from evento
-            where q.id = evento.idQuadra and
-            '${dataFormatada}' between dtHoraComeco and dtHoraEncerramento
-        ) as eventoRolando,
             (
                 select count(*) from quadraJogadores qj2
                 where q.id = qj2.idQuadra
-            ) as qtdJogadores
+            ) as qtdJogadores,
+            (
+                select 1 from seguidores where idSeguidor = ${idUsuario} and idSeguido = u.id
+            ) as voceSegue
     from quadra q
     left join quadraJogadores qj on
     qj.idQuadra = q.id

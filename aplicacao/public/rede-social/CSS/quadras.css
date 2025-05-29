@@ -87,7 +87,6 @@ body, html {
     background-color: rgba(43, 42, 42, 0.623);
 }
 .foto-perfil {
-    background-image: url("../IMAGE/fotografo-de-retrato-de-advogados_adv-47.jpg");
     background-position: center;
     background-size: cover;
     border-radius: 50%;
@@ -118,6 +117,7 @@ body, html {
     height: 100%;
     border-left: 1px solid gray;
     overflow-y: auto;
+    scrollbar-width: none; 
 }
 #container-quadras {
     width: 90%;
@@ -163,12 +163,12 @@ body, html {
     align-items: center;
     flex-direction: column;
     width: 45%;
-    height: 65%;
+    height: 75%;
     background-color: #2b2b2b;
     margin-bottom: 20px;
 }
 .foto-quadra {
-    background-image: url('../../assets/imgs/not-image.png');
+    background-image: url('');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

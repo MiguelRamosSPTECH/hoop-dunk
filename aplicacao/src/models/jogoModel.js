@@ -1,26 +1,31 @@
 var database = require('../database/config')
 
-    let data = new Date().toLocaleString();
-    data = data.replace(" ", "");
-    data = data.replaceAll("/", "-");
-    data = data.split(",");
-    const horas = data[0].split("-");
-    let dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`
-
+    let dataFormatada;
+    function formataData() {
+        let data = new Date().toLocaleString();
+        data = data.replace(" ", "");
+        data = data.replaceAll("/", "-");
+        data = data.split(",");
+        const horas = data[0].split("-");
+        dataFormatada = `${horas[2]}-${horas[1]}-${horas[0]} ${data[1]}`        
+    }
 
 function buscar() {
+    formataData();
     console.log("ACESSEI O JOGO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscar():");
     var instrucaoSql = `
         SELECT e.id, e.nome, e.modalidade, e.nivelJogo, e.dtHoraComeco, q.localizacao FROM evento e
         INNER JOIN quadra q ON
         e.idQuadra = q.id
-        order by e.dtHoraComeco desc;
+        where e.dtHoraComeco >= '${dataFormatada.split(" ")[0]}'
+        order by e.dtHoraComeco;
     `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);    
     return database.executar(instrucaoSql);    
 }
 
 function cadastrarJogo(jogo) {
+    formataData()
     console.log("ACESSEI O JOGO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarJogo():");
     let instrucaoSql = `
         INSERT INTO evento (nome, modalidade, nivelJogo, dtHoraComeco, dtHoraEncerramento, idQuadra, observacao, created_at)
@@ -33,16 +38,17 @@ function cadastrarJogo(jogo) {
 }
 
 
-function verificarDisponibilidadeJogo(jogo) {
+function verificarDisponibilidadeJogo(jogo, metodo) {
 
     let instrucaoSql = `
         select 1 from evento where 
-        ('${jogo.dtHoraComeco}' between dtHoraComeco and dtHoraEncerramento 
-        or '${jogo.dtHoraEncerramento}' 
-        between dtHoraComeco and dtHoraEncerramento) 
-        and idQuadra = ${jogo.idQuadra};    
-    
-    `
+        (('${jogo.dtHoraComeco}' between dtHoraComeco and dtHoraEncerramento )
+        or (dthoraComeco between '${jogo.dtHoraComeco}' and '${jogo.dtHoraEncerramento}'))
+        and idQuadra = ${jogo.idQuadra}`
+    if(metodo == "update") {
+        instrucaoSql+=` and evento.id <> ${jogo.id}`
+    }
+    instrucaoSql+=` limit 1;`
     console.log("Executando instrucao SQL: \n"+ instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -67,10 +73,11 @@ function participarJogo(idUsuario, tipoJogador, tipoAcao, idJogo) {
     return database.executar(instrucaoSql);    
 }
 
-function detalhesJogo(idJogo) {
+function detalhesJogo(idJogo, idUsuario) {
     console.log("ACESSEI O JOGO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function detalhesJogo():");
     let instrucaoSql = `
         select 
+            e.id as idJogo,
             e.nome as nomeJogo, 
             e.nivelJogo as nivelJogo, 
             e.modalidade as modalidadeJogo, 
@@ -79,10 +86,14 @@ function detalhesJogo(idJogo) {
             q.nome as nomeQuadra,
             q.localizacao as localizacaoQuadra,
             q.foto as fotoQuadra, 
+            u.id as idJogador, 
             u.nome as nomeJogador, 
             u.nomePerfil as nomePerfilJogador, 
-            u.foto as fotoJogador ,
+            u.foto as fotoJogador,
                 (select count(*) from eventoJogadores where idEvento = e.id) as qtdJogadores,
+                (
+                    select 1 from seguidores where idSeguidor = ${idUsuario} and idSeguido = u.id
+                ) as voceSegue,
             ej.tipoJogador as tipoJogador
             from evento e
             inner join quadra q on
@@ -98,6 +109,7 @@ function detalhesJogo(idJogo) {
 }
 
 function verificarJogoAgora(idJogo, idQuadra) {
+    formataData()
     console.log("ACESSEI O JOGO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function verificarJogo():", idJogo, idQuadra);
     let instrucaoSql = ``
     if(idQuadra  == "false" || idQuadra == false) {
@@ -106,7 +118,7 @@ function verificarJogoAgora(idJogo, idQuadra) {
         `
     } else {
         instrucaoSql = `
-            select 1 as eventoRolando from evento e 
+            select 1 as eventoRolando, e.id as jogoId from evento e 
             inner join quadra q on
             q.id = e.idQuadra
             where q.id = ${idQuadra}
@@ -117,11 +129,51 @@ function verificarJogoAgora(idJogo, idQuadra) {
     return database.executar(instrucaoSql);
 }
 
+function buscarPorId(idJogo) {
+    console.log("ACESSEI O JOGO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarPorId():", idJogo);
+
+    var instrucaoSql = `
+        SELECT 
+        e.id as idJogo,
+        e.nome as NomeJogo,
+        e.modalidade as ModalidadeJogo,
+        date_format(e.dtHoraComeco, "%Y-%m-%dT%H:%i") as dtHoraComeco,
+        date_format(e.dtHoraEncerramento, "%Y-%m-%dT%H:%i") as dtHoraEncerramento,
+        e.observacao as descJogo,
+        e.idQuadra as idQuadra,
+        e.nome as nomeQuadra
+        FROM EVENTO e 
+        inner join quadra q on
+        e.idQuadra = q.id
+        where e.id = ${idJogo};`;
+
+    console.log("EXECUTANDO A INSTRUÇÃO SQL:"+ instrucaoSql)
+    return database.executar(instrucaoSql);
+}
+
+function editJogo(dados) {
+    console.log("entrei no model do JOGO E ACESSEI A FUNÇÃO editJogo()")
+    let instrucaoSql = `
+        UPDATE evento SET 
+        nome = '${dados.nome}', 
+        modalidade = '${dados.modalidade}',
+        dtHoraComeco = '${dados.dtHoraComeco}',
+        dtHoraEncerramento = '${dados.dtHoraEncerramento}',
+        observacao = '${dados.observacao}',
+        idQuadra = ${dados.idQuadra}
+        WHERE id = ${dados.id};
+    `
+    console.log("Executando a query: ", instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrarJogo,
     verificarDisponibilidadeJogo,
     buscar,
     participarJogo,
     detalhesJogo,
-    verificarJogoAgora
+    verificarJogoAgora,
+    buscarPorId,
+    editJogo
 }

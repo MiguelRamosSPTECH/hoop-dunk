@@ -15,7 +15,7 @@ function autenticar(perfil, senha) {
         (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
         (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo
         from usuario u
-        where u.nomePerfil = '${perfil}' and u.senha = '${senha}';
+        where u.nomePerfil = '${perfil}' and u.senha = SHA2('${senha}', 256);
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -28,7 +28,7 @@ function cadastrar(nome, nomePerfil, email, senha) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO usuario (nome, nomePerfil, email, senha) VALUES ('${nome}', '${nomePerfil}', '${email}', '${senha}');
+        INSERT INTO usuario (nome, nomePerfil, email, senha, created_at) VALUES ('${nome}', '${nomePerfil}', '${email}', SHA2('${senha}', 256), '${dataFormatada}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

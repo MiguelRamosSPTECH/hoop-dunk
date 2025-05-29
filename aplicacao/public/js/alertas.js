@@ -16,8 +16,8 @@ async function gerarAlerta(mensagem, sucesso) {
     alerta.appendChild(texto);
     document.body.appendChild(alerta); //adiciono essa div no meu html
     
-    setTimeout(() => 
+    await setTimeout(() => 
         alerta.remove()
-    ,2000)        
+    ,2000)     
 
 }

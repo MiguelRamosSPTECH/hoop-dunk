@@ -13,7 +13,7 @@ router.get("/buscar", function(req,res) {
     quadraController.buscar(req, res);
 })
 
-router.get('/:id/detalhes', function(req,res) {
+router.get('/:id/:idUsuario/detalhes', function(req,res) {
     quadraController.buscarPeloId(req,res);
 })
 

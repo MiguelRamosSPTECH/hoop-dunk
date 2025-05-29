@@ -112,7 +112,6 @@ function editProfile() {
             const dadosAtualizados = await resposta.json();
             console.log("DADOS ATUALIZADOS: ", dadosAtualizados);
             sessionStorage.DADOS_USUARIO = JSON.stringify(dadosAtualizados);
-            modal.close()
             location.reload()
         }
     })
@@ -121,3 +120,4 @@ function editProfile() {
         console.log("deu erro", mgsErro);
     })
 }
+

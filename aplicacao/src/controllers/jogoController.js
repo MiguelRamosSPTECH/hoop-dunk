@@ -12,7 +12,7 @@ function buscar(req,res) {
 function cadastrarJogo(req,res) {
     const jogo = req.body;
 
-    jogoModel.verificarDisponibilidadeJogo(jogo).then(resposta => {
+    jogoModel.verificarDisponibilidadeJogo(jogo, "insert").then(resposta => {
         if(resposta.length == 0) {
             jogoModel.cadastrarJogo(jogo).then(resposta => {
                 if(resposta.affectedRows == 1) {
@@ -34,7 +34,8 @@ function cadastrarJogo(req,res) {
 
 function verDetalhesJogo(req,res) {
     const idJogo = req.params.id
-    jogoModel.detalhesJogo(idJogo).then(resposta => {
+    const idUsuario = req.params.idUsuario;
+    jogoModel.detalhesJogo(idJogo, idUsuario).then(resposta => {
         if(resposta.length > 0) {
             res.status(200).json(resposta);
         }
@@ -58,10 +59,41 @@ function verificarJogoAgora(req,res) {
     })
 }
 
+function buscarPorId(req,res) {
+    const idJogo = req.params.id || false;
+    if(idJogo != false) {
+        jogoModel.buscarPorId(idJogo).then(resposta => {
+            if(resposta.length > 0) {
+                res.status(200).json(resposta);
+            }
+        })
+    }
+}
+
+function updateJogo(req,res) {
+    const dados = req.body
+    jogoModel.verificarDisponibilidadeJogo(dados, "update").then(resposta => {
+        if(resposta.length == 0) {
+            jogoModel.editJogo(dados).then(resposta => {
+                if(resposta.affectedRows == 1) {
+                    res.status(200).send("UPDATE OK")
+                }
+            })
+        } else {
+            res.status(401).send("Horário indisponível")
+        }
+    })
+    .catch(erro => {
+        res.status(401).json(erro);
+    })
+
+}
 module.exports = {
     cadastrarJogo,
     buscar,
     verDetalhesJogo,
     participarJogo,
-    verificarJogoAgora
+    verificarJogoAgora,
+    buscarPorId,
+    updateJogo
 }

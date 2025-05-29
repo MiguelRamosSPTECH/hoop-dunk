@@ -256,6 +256,12 @@ body, html {
     gap: 15px;
     width: 100%;
     height: 15%;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+.pessoa-seguir:hover {
+    border-radius: 25px;
+    background-color: #47474775;
 }
 .pessoa-seguir img {
     width: 17%;
@@ -304,4 +310,143 @@ body, html {
     color: #0559d4;
     font-weight: 800;
     font-size: 20px;
+}
+
+/* modal */
+#modalEdit {
+    width: 50%;
+    height: 80%;
+    background-color: #121212;
+    border: none;
+}
+#content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#header-modal {
+    width: 100%;
+    height: 10%;
+    display: flex;
+}
+#titulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 40%;
+}
+#titulo img {
+    width: 15%;
+    cursor: pointer;
+}
+#titulo h3 {
+    color: white;
+}
+
+#area-save {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 70%;
+    height: 100%;
+}
+#area-save button {
+    font-family: "Poppins", sans-serif;
+    color: black;
+    font-weight: 800;
+    width: 20%;
+    height: 60%;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    transition: 0.4s ease;
+    cursor: pointer;
+}
+#area-save button:hover {
+    transform: scale(1.03);
+}
+
+#body-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 90%;
+    width: 100%;
+}
+#area-edit-photo {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 150px;
+    width: 100%;
+    height: 20%;
+    background-color: #2b2b2b86;
+    border-radius: 13px;
+}
+
+#area-edit-photo label {
+    background-color: #0559d4;
+    color: white;
+    font-weight: 800;
+    width: 20%;
+    height: 35%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.edit {
+    height: 85%;
+    width: 12%;
+}
+.inputs-2 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 15%;
+}
+.group-input {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    height: 100%;
+    color: white;
+    font-weight: 800;
+}
+.group-input input, select, textarea {
+    font-family: "Poppins", sans-serif;
+    background-color: #2b2b2b86;
+    border: none;
+    outline: none;
+    color: white;
+    width: 100%;
+    height: 75%;
+    border-radius: 13px;
+}
+.inputs-1 {
+    height: 15%;
+    width: 100%;
+}
+.inputs-1 .group-input {
+    width: 100%;
+}
+textarea {
+    height: 100%;
+}
+#desc {
+    width: 100%;
+    height: 60%;
+}
+/* background-modal */
+#hide {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(59, 59, 59, 0.534);
+    z-index: 1;
 }

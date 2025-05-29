@@ -8,12 +8,12 @@ function cadastrar() {
 
     if(nome == "" || nomeUsuario.value == "" || email == "" || senha.value == "") {
         mensagem = `Você deve preencher todos os campos!`
-    } else if(nome.length < 2) {
-        mensagem = `O nome deve ter pelo menos 3 caracteres.`
+    } else if(!/^([A-Z][a-z]+)(\s[A-Z][a-z]+)+$/.test(nome)) {
+        mensagem = `Nome completo deve ter Nome e Sobrenome`
     } else if(nomeUsuario.validity.tooShort) {
         mensagem = `Nome de perfil deve conter mais que 5 caracteres!`
-    } else if(!email.includes('@') || !email.includes('.')) {
-        mensagem = `Email no formato incorreto!`
+    } else if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+        mensagem = `Insira um e-mail válido`
     } else if(senha.validity.tooShort) {
         mensagem = `Sua senha deve ter mais que 8 caracteres!`
     } else {

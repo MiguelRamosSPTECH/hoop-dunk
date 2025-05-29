@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="CSS/style.css">
     <script src="../js/sessao.js"></script>
     <script src="../js/seguidores.js"></script>
+    <script src="../js/postProcess.js"></script>
 </head>
-<body onload="validarSessao(), trazerSugestoesPessoas()">
+<body onload="validarSessao(), trazerSugestoesPessoas(), allPosts()">
     <div class="container-all">
         <div id="navbar-lateral">
             <a id="area-logo-hoopdunk" href="./index.html"></a>
@@ -34,11 +35,16 @@
                     <div class="foto-perfil post"></div>
                     <textarea id="desc-post" onkeyup="atualizaButton()" rows="1" placeholder="We’re gonna be championships!"></textarea>
                 </div>
+                <div id="foto_post"></div>
                 <div id="functions-post">
-                    <img id="send-photo" src="IMAGE/picture-icon.png" alt="">
-                    <button id="send_post">Shoot!</button>
+                    <label for="ipt_foto_post">
+                        <img id="send-photo" src="IMAGE/picture-icon.png" alt="">
+                    </label>
+                    <input onchange="mudarFotoPost()" type="file" id="ipt_foto_post">
+                    <button id="send_post" onclick="publicarPost()">Shoot!</button>
                 </div>
             </div>
+            <div id="posts-all"></div>
         </div>
         <div id="area-explorar">
             <div id="area-pesquisar">

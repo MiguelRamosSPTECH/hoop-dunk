@@ -19,6 +19,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var quadraRouter = require("./src/routes/quadras");
 var jogoRouter = require("./src/routes/jogos");
+var postRouter = require('./src/routes/posts');
 
 
 app.use(express.json()); //converte string em json para objeto para conseguirmos acessar dados no controller, se nao fosse isso teriamo que converter dnv usando json.parse()
@@ -31,6 +32,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/quadras", quadraRouter);
 app.use("/jogos", jogoRouter);
+app.use("/posts", postRouter);
 
 
 app.listen(PORTA_APP, function () {
