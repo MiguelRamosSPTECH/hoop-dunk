@@ -60,19 +60,33 @@ console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: co
     let instrucaoSql = ``
     if(idSeguido == "false" || idSeguido == false) { //dependendo da onde vem ele vem como texto e como boolean msm
         instrucaoSql = `
-            select * ,
+            select u.*,
+            p.idUsuario,
+            p.descricao as descPost,
+            p.foto as fotoPost,
+            date_format(p.dtPost, "%d de %M") as dtPost,
             (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
             (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo
             from usuario u
-            where u.id = ${idSeguidor};    
+            left join post p on
+            p.idUsuario = u.id
+            where u.id = ${idSeguidor}
+            order by dtPost desc; 
         `
     } else {
-            instrucaoSql = `select *,
+            instrucaoSql = `select u.*,
+            p.idUsuario,
+            p.descricao as descPost,
+            p.foto as fotoPost,
+            date_format(p.dtPost, "%d de %M") as dtPost,
             (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
             (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo,
             (select 1 from seguidores where idSeguidor = ${idSeguidor} and idSeguido = ${idSeguido}) as voceSegue
             from usuario u
-            where id = ${idSeguido};
+            left join post p on
+            p.idUsuario = u.id            
+            where u.id = ${idSeguido}
+            order by dtPost desc;
         `
     }
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -121,7 +135,8 @@ function listarSeguidores(idUsuario, tipoAcao) {
         seguido.id = s1.idSeguido
         inner join usuario seguidor on
         s1.idSeguidor = seguidor.id
-        where seguidor.id = ${idUsuario};
+        where seguidor.id = ${idUsuario}
+        and seguido.id <> ${idUsuario};
   `    
   } else {
     instrucaoSql = `

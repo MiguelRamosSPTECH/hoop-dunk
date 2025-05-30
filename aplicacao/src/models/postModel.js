@@ -30,7 +30,7 @@ function allPosts() {
         u.nomePerfil as perfilUsuario, 
         u.foto as fotoUsuario,
         p.descricao as postDescricao, p.foto as postFoto,
-        p.dtPost as dtPost
+        date_format(p.dtPost, "%d de %M") as dtPost
         from post p
         inner join usuario u on
         u.id = p.idUsuario

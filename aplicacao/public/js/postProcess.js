@@ -11,21 +11,24 @@ function mudarFotoPost() {
 
 function publicarPost() {
     const descPost = document.getElementById('desc-post').value;
-    const fotoPost = ipt_foto_post.files[0];
+    const fotoPost = ipt_foto_post.files[0] || null;
     const formData = new FormData();
     formData.append("idUsuario", JSON.parse(sessionStorage.DADOS_USUARIO)[0].id);
     formData.append("descPost", descPost)
     formData.append("fotoPost", fotoPost);
-
-    fetch('/posts/publicar', {
-        method: "POST",
-        body: formData
-    })
-    .then(resposta => {
-        if(resposta.ok) {
-            location.reload()
-        }
-    })
+    if(formData.get("descPost").length == 0 && fotoPost == null) {
+        gerarAlerta("Post sem conteúdo")
+    } else {
+        fetch('/posts/publicar', {
+            method: "POST",
+            body: formData
+        })
+        .then(resposta => {
+            if(resposta.ok) {
+                location.reload()
+            }
+        })
+    }
 }
 
 function allPosts() {
@@ -38,8 +41,6 @@ function allPosts() {
         let textoPosts = ``
 
         allPosts.forEach(post => {
-            let dataFormatada = post.dtPost.split("T")[0].split("-");
-            dataFormatada = `${dataFormatada[2]}/${dataFormatada[1]}/${dataFormatada[0]}`
             textoPosts+=`
             <div class="posts">
                 <div class="area1-post">
@@ -48,12 +49,13 @@ function allPosts() {
                         <div class="infos-user-post">
                             <span>${post.nomeUsuario}</span>
                             <span class="arroba">@${post.perfilUsuario}</span>
+                            <span class="data_post">• ${post.dtPost}</span>
                         </div>
                     </div>
-                    <span class="data_post">${dataFormatada}</span>
+                     <span id="edit-post">•••</span>
                 </div>
                 <div class="descricao_post">${post.postDescricao}</div>
-                <div class="foto_posts"><img src="../assets/imgs/${post.postFoto}" alt=""></div>
+                ${post.postFoto == "null" ? '' : `<div class="foto_posts"><img src="../assets/imgs/${post.postFoto}" alt=""></div>`}
             </div>            
             `
         })

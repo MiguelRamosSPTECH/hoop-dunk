@@ -6,7 +6,7 @@ async function gerarAlerta(mensagem, sucesso) {
         alerta.style.backgroundColor = "green";
     }
     const img = document.createElement('img');
-    img.src = `../IMAGE/icon-erro-card.png`
+    img.src = `./IMAGE/icon-erro-card.png`
 
     const texto = document.createElement('span');
     texto.textContent = mensagem;

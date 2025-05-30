@@ -1,8 +1,8 @@
 var postModel = require("../models/postModel");
-const { all } = require("../routes/posts");
 
 function publicar(req,res) {
-    const foto = req.file.filename;
+
+    const foto = req.file == undefined ? null : req.file.filename;
     const { idUsuario, descPost } = req.body;
     const post = { idUsuario, descPost, foto };
     post.idUsuario = Number(post.idUsuario)

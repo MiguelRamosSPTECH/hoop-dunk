@@ -30,38 +30,38 @@
                 </div>
             </a>
         </div>
-        <div id="content-perfil">
-            <div id="container">
-                <div id="content-edit-perfil">
-                    <div id="area-edit-perfil">
-                        <div class="foto-perfil profile" id="foto_user"></div>
-                        <div id="infos-perfil">
-                            <div id="info-social">
-                                <span id="name_user" class="nomeUsuario"></span>
-                                <span id="nickname_user" class="nickname"></span>
+        <div class="container-infos">
+            <div id="content-perfil">
+                <div id="container">
+                    <div id="content-edit-perfil">
+                        <div id="area-edit-perfil">
+                            <div class="foto-perfil profile" id="foto_user"></div>
+                            <div id="infos-perfil">
+                                <div id="info-social">
+                                    <span id="name_user" class="nomeUsuario"></span>
+                                    <span id="nickname_user" class="nickname"></span>
+                                </div>
+                                <div id="area-seguidores" onclick="abrirFecharModal(1)">
+                                    <label><span id="seguidores"></span> Seguidores</label>
+                                    <label><span id="seguindo"></span> Seguindo</label>
+                                </div>
+                                <div id="area-conhecimento">
+                                    <label>Posição: <span id="posicao_game">Armador</span></label>
+                                    <label>Nível: <span id="level_player">Federado</span></label>
+                                </div>
                             </div>
-                            <div id="area-seguidores" onclick="abrirFecharModal(1)">
-                                <label><span id="seguidores"></span> Seguidores</label>
-                                <label><span id="seguindo"></span> Seguindo</label>
-                            </div>
-                            <div id="area-conhecimento">
-                                <label>Posição: <span id="posicao_game">Armador</span></label>
-                                <label>Nível: <span id="level_player">Federado</span></label>
+                            <div id="editar">
+                                <div id="centraliza-botao">
+                                    <button class="openModal" onclick="abrirFecharModal(0)">Editar Perfil</button>
+                                    <button id="sair-sessao" onclick="limparSessao()">Sair</button>
+                                </div>
                             </div>
                         </div>
-                        <div id="editar">
-                            <div id="centraliza-botao">
-                                <button class="openModal" onclick="abrirFecharModal(0)">Editar Perfil</button>
-                                <button id="sair-sessao" onclick="limparSessao()">Sair</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="posts">
-                    <h3>Infelizmente você ainda não fez nenhum post.</h3>
+                    </div>              
                 </div>
             </div>
-        </div>
+            <div id="posts"><!-- <h3>Infelizmente você ainda não fez nenhum post.</h3> --></div>              
+        </div>        
     </div>
 
     <!-- AREA DO MODAL-->

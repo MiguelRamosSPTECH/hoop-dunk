@@ -126,7 +126,7 @@ function buscarPeloid(req,res) {
         res.status(200).json(resposta);
     })
     .catch(erro => {
-        res.status(401).send("Deu erro", erro);
+        res.status(401).send("Deu erro");
     })
 }
 

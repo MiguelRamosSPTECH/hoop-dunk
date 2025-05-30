@@ -319,20 +319,22 @@ body, html {
     width: 100%;
     color: white;
     font-size: 16px;
-    gap: 15px;
     border-bottom: 2px solid rgba(53, 53, 53, 0.541);
 }
 .area1-post {
     display: flex;
     width: 100%;
     justify-content: space-around;
-    gap: 300px;
+    gap: 50px;
+    align-items: start;
 }
 .infoUser {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     gap: 15px;
+    color: gray;
+    
 }
 .foto-user-post {
     width: 55px;
@@ -342,13 +344,16 @@ body, html {
 }
 .infos-user-post {
     display: flex;
-    flex-direction: column;
-    width: 200px;
+    gap: 5px;
+    width: 500px;
+    height: 30px;
+    align-items: center;
+    color: white;
 }
 .arroba {
     font-size: 14px;
     color: gray;
-    font-weight: 800;
+    font-weight: 700;
 }
 .data_post {
     color: gray;
@@ -356,18 +361,26 @@ body, html {
     font-size: 14px;
 }
 .foto_posts {
-    width: 77.5%;
-    height: 300px;
+    width: 77%;
+    height: 100%;
+    /* talvez mudar aqui */
 }
 .foto_posts img {
-    width: 100%;
+    width: 75%;
     height: 100%;
     background-position: center;
     background-size: cover;
+    border-radius: 15px;
 }
 .descricao_post {
     display: flex;
     align-items: start;
     justify-content: start;
-    width: 77.5%;
+    width: 76%;
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+#edit-post {
+    color: gray;
+    cursor: pointer;
 }

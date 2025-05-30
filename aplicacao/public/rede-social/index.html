@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoopdunk</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/alerta.css">
     <script src="../js/sessao.js"></script>
     <script src="../js/seguidores.js"></script>
     <script src="../js/postProcess.js"></script>
+    <script src="../js/alertas.js"></script>
 </head>
 <body onload="validarSessao(), trazerSugestoesPessoas(), allPosts()">
     <div class="container-all">
@@ -33,7 +35,7 @@
             <div id="area-send-post">
                 <div id="content-post">
                     <div class="foto-perfil post"></div>
-                    <textarea id="desc-post" onkeyup="atualizaButton()" rows="1" placeholder="We’re gonna be championships!"></textarea>
+                    <textarea maxlength="43" id="desc-post" onkeyup="atualizaButton()" rows="1" placeholder="We’re gonna be championships!"></textarea>
                 </div>
                 <div id="foto_post"></div>
                 <div id="functions-post">

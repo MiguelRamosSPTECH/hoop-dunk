@@ -163,7 +163,6 @@ function participarQuadra() {
         if(resposta.ok) {
             console.log(resposta);
             const dados = await resposta.text();
-            alert(dados)
             location.reload();            
         }
 

@@ -49,13 +49,39 @@ function carregarPerfil() {
         .then(async resposta => {
             if(resposta.ok) {
                 const divButtons = document.getElementById('centraliza-botao');
+                const divPosts = document.getElementById('posts');
+                let postsText = ``
                 const dados = await resposta.json(); 
                 preencherDadosUsuario(dados[0]);   
-                if(dados[1] != undefined) {
+                if(dados[dados.length-1].mensagem != undefined) {
                     divButtons.innerHTML = `
                         <button onclick="seguirJogador(${dadosJson.id},${dados[0].id}, this.innerText)">${dados[0].voceSegue ? "Deixar de seguir" : "Seguir"}</button>
                     `
                 }
+                if(dados.length > 1 && dados[0].fotoPost != null) {
+                    dados.forEach(post => {
+                        if(post.mensagem != "proprioUsuario") {
+                            postsText+=`
+                                <div class="post">
+                                    <div class="area1-post">
+                                        <div class="infoUser">
+                                            <img onclick="window.location='./perfil-jogador/index.html?idUsuario=${post.idUsuario}'" class="foto-user-post" src="../../assets/imgs/${post.foto || 'sem_imagem_avatar.png'}" alt="">
+                                            <div class="infos-user-post">
+                                                <span>${post.nome}</span>
+                                                <span class="arroba">@${post.nomePerfil}</span>
+                                                <span class="data_post">• ${post.dtPost}</span>
+                                            </div>
+                                        </div>
+                                        <span id="edit-post">•••</span>
+                                    </div>
+                                    <div class="descricao_post">${post.descPost}</div>
+                                    ${post.fotoPost == "null" ? '' : `<div class="foto_posts"><img src="../../assets/imgs/${post.fotoPost}" alt=""></div>`}
+                                </div>                                             
+                            `
+                        }
+                    })
+                }
+                divPosts.innerHTML = postsText == "" ? "<h3>Sem posts ainda</h3>" : postsText;
 
             } else {
                 console.error("Erro ao buscar dados do usuário");

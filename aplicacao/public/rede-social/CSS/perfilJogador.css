@@ -110,16 +110,25 @@ body, html {
 }
 
 /* edicao de perfil */
-
+.container-infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 75%;
+    border-left: 1px solid gray;
+    overflow-y: auto;
+    scrollbar-width: none; 
+}
 #content-perfil {
     display: flex;
     justify-content: center;
-    height: 100%;
-    width: 75%;
-    border-left: 1px solid gray ;
+    height: 50%;
+    width: 85%;
+    border-bottom: 1px solid gray;
 }
 #container {
-    width: 80%;
+    width: 100%;
     height: 100%;
 }
 
@@ -128,7 +137,7 @@ body, html {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 50%;
+    height: 100%;
     border-bottom: 1px solid gray;
 }
 #area-edit-perfil {
@@ -470,4 +479,88 @@ body, html {
 .pessoa button:hover {
     background-color: #44434394;
     border: none;
+}
+
+/* posts do usuario */
+#posts {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    width: 100%;
+    height: 50%;
+}
+.post {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px 0px 15px 0px;
+    width: 100%;
+    color: white;
+    font-size: 14px;
+    border-bottom: 2px solid rgba(53, 53, 53, 0.541);
+}
+
+.area1-post {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    gap: 250px;
+    align-items: start;
+}
+.infoUser {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 15px;
+    
+}
+.foto-user-post {
+    width: 55px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.infos-user-post {
+    display: flex;
+    gap: 5px;
+    width: 500px;
+    height: 30px;
+    align-items: center;
+    font-weight: 800;
+    color: white;
+}
+
+.arroba {
+    font-size: 14px;
+    font-weight: 500;
+    color: gray;
+}
+.data_post {
+    color: gray;
+    font-weight: 600;
+    font-size: 14px;
+}
+.foto_posts {
+    width: 77%;
+    height: 85%;
+    /* talvez mudar aqui */
+}
+.foto_posts img {
+    width: 55%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+}
+.descricao_post {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 77%;
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+#edit-post {
+    color: gray;
+    cursor: pointer;
 }
