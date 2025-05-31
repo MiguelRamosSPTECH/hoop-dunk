@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <script src="../js/sessao.js"></script>
+    <script src="../js/seguidores.js"></script>
+    <script src="../js/postProcess.js"></script>   
+    <script src="../js/perfilUsuario.js"></script> 
+</head>
+<body onload="validarSessao(), trazerSugestoesPessoas()">
+    <div class="container-all">
+        <div id="navbar-lateral">
+            <a id="area-logo-hoopdunk" href="index.html"></a>
+            <div id="menu-navbar">
+                <ul>
+                    <li onclick="window.location='index.html'"><img class="icon" src="./IMAGE/home-icon.png">INICIAL</li>
+                    <li onclick="window.location='explorar.html'"><img class="icon" src="./IMAGE/search-icon.png">EXPLORAR</li>
+                    <li onclick="window.location='./quadras/index.html'"><img class="icon" src="./IMAGE/man-icon.png">QUADRAS</li>
+                    <li onclick="window.location='./jogos/index.html'"><img class="icon" src="./IMAGE/schedule-icon.png">JOGOS</li>
+                </ul>
+            </div>
+            <a href="./index.html" id="area-perfil">    
+                <div class="foto-perfil"></div>
+                <div id="nicknames">
+                    <span  class="nomeUsuario"></span>
+                    <span class="nickname"></span>
+                </div>
+            </a>
+        </div> 
+        <div class="search-content">
+            <div id="area-pesquisar">
+                <div id="input-pesquisar">
+                    <img src="./IMAGE/search-icon.png"><input type="text" onkeyup="explorar('Pessoas')" placeholder="Pesquisar" id="search_people">
+                </div>
+            </div>
+            <div id="search_result">
+                <div class="params-search">
+                    <button id="pessoas-search" onclick="explorar('Pessoas')">Pessoas</button>
+                    <button id="posts-search" onclick="explorar('Posts')">Posts</button>
+                </div>
+                <div id="body-search"></div>
+            </div>
+        </div>   
+        <div id="area-explorar">
+            <div id="area-pessoas">
+                <h3>SUGESTÕES</h3>
+                <!-- for com as pessoa q ele n segue -->
+                <div id="para-seguir"></div>
+            </div>
+        </div>            
+    </div>
+</body>
+</html>

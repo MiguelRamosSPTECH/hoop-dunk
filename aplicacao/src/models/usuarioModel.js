@@ -153,6 +153,32 @@ function listarSeguidores(idUsuario, tipoAcao) {
 
 }
 
+function explorar(parametro, tipoBusca) {
+    let instrucaoSql = ``
+    if(tipoBusca == "Pessoas") {
+        instrucaoSql = `
+            SELECT id, nome, nomePerfil, foto FROM usuario
+            WHERE nome LIKE '%${parametro}%' OR nomePerfil LIKE '%${parametro}%'
+        `
+    } else {
+        instrucaoSql = `
+            select 
+            u.id as idUsuario,
+            u.nome as nomeUsuario, 
+            u.nomePerfil as perfilUsuario, 
+            u.foto as fotoUsuario,
+            p.descricao as postDescricao, p.foto as postFoto,
+            date_format(p.dtPost, "%d de %M") as dtPost
+            from post p
+            inner join usuario u on
+            u.id = p.idUsuario
+            where u.nome LIKE '%${parametro}%' or u.nomePerfil LIKE '%${parametro}%'
+            order by dtPost desc;
+        `        
+    }
+    console.log("ENTREI NO USUARIO MODEL PARA EXPLORAR EXECUTANDO FUNÇÃO: ", instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 module.exports = {
     naoSeguidores,
     autenticar,
@@ -160,5 +186,6 @@ module.exports = {
     atualizar,
     buscarUsuario,
     seguirJogador,
-    listarSeguidores
+    listarSeguidores,
+    explorar
 };

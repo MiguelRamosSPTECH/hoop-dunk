@@ -207,35 +207,6 @@ body, html {
     scrollbar-width: none; 
 }
 
-#area-pesquisar {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    border-bottom: 1px solid gray;
-    width: 90%;
-    height: 9%;
-}
-#input-pesquisar {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    align-items: center;
-    width: 100%;
-}
-#input-pesquisar img {
-    width: 8%;
-    height: 35%;
-}
-#input-pesquisar input {
-    width: 89%;
-    font-family: "Poppins", sans-serif;
-    color: white;
-    font-weight: 500;
-    font-size: 15px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-}
 #area-pessoas {
     width: 90%;
     height: 85%;
@@ -384,3 +355,112 @@ body, html {
     color: gray;
     cursor: pointer;
 }
+
+
+/* area explorar */
+
+.search-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+#area-pesquisar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 12%;
+}
+#input-pesquisar {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    height: 30%;
+    border: 1px solid gray;
+    border-radius: 50px;
+}
+#input-pesquisar img {
+    width: 2.75%;
+    height: 75%;
+}
+#input-pesquisar input {
+    width: 89%;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+#search_result {
+    height: 87%;
+    width: 100%;
+    color: white;
+    display: none;
+}
+.params-search {
+    display: flex;
+    width: 100%;
+    height: 8%;   
+}
+.params-search button {
+    font-family: "Poppins",sans-serif;
+    background-color: transparent;
+    width: 50%;
+    border: none;
+    transition: 0.4s ease;
+    color: white;
+}
+#pessoas-search {
+    border-right: 1px solid gray;
+}
+.params-search button:hover {
+    border-bottom: 1px solid rgb(28, 28, 226);
+}
+#body-search {
+    height:92%;
+    overflow-y: auto;
+    scrollbar-width: none; 
+    
+}
+.pessoa-search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 15%;
+    border-bottom: 1px solid gray;
+    gap: 10px;
+    transition: 0.4s ease;
+    cursor: pointer;
+}
+.pessoa-search:hover {
+    background-color: rgba(75, 74, 74, 0.178);
+    border-radius: 25px;
+}
+.pessoa-search img {
+    margin-left: 25px;
+    width: 8%;
+    height: 65%;
+    border-radius: 50%;
+}
+.pessoa-info-search {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+}
+.arroba_pessoa_search {
+    color: gray;
+    font-weight: 700;
+}
+
+

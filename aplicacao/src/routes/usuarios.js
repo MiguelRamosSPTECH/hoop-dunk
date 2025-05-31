@@ -32,4 +32,10 @@ router.get('/:idUsuario/:tipoAcao/listarSeguidores', function(req,res) {
     usuarioController.listarSeguidores(req,res);
 })
 
+// explorar
+
+router.get("/:busca/:tipoBusca/explorar", (req,res) => {
+    usuarioController.explorar(req,res);
+})
+
 module.exports = router;

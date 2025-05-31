@@ -147,3 +147,51 @@ function editProfile() {
     })
 }
 
+function explorar(elemento) {
+    let idUsuario = JSON.parse(sessionStorage.DADOS_USUARIO)[0].id
+    let parametro = search_people.value;
+    fetch(`/usuarios/${parametro}/${elemento}/explorar`, {
+        method: "GET"
+    })
+    .then(async resposta => {
+        let resultadoBusca = await resposta.json();
+        console.log(resultadoBusca);
+        let divBusca = document.getElementById('search_result');
+        let bodyBusca = document.getElementById('body-search');
+        let buscaTexto = ``
+        divBusca.style.display = "block";
+        resultadoBusca.forEach(busca => {
+            if(elemento == "Pessoas") {
+                buscaTexto+=`
+                    <div class="pessoa-search" onclick="window.location='./perfil-jogador/index.html${busca.id == idUsuario ? "" : `?idUsuario=${busca.id}`}'">
+                        <img src="../assets/imgs/${busca.foto || "sem_imagem_avatar.png"}">
+                        <div class="pessoa-info-search">
+                            <span class="nome_pessoa_search">${busca.nome}</span>
+                            <span class="arroba_pessoa_search">@${busca.nomePerfil}</span>
+                        </div>
+                    </div>                
+                `
+            } else {
+                buscaTexto+=`
+                    <div class="posts">
+                        <div class="area1-post">
+                            <div class="infoUser">
+                                <img onclick="window.location='./perfil-jogador/index.html?idUsuario=${busca.idUsuario}'" class="foto-user-post" src="../assets/imgs/${busca.fotoUsuario || 'sem_imagem_avatar.png'}" alt="">
+                                <div class="infos-user-post">
+                                    <span>${busca.nomeUsuario}</span>
+                                    <span class="arroba">@${busca.perfilUsuario}</span>
+                                    <span class="data_post">• ${busca.dtPost}</span>
+                                </div>
+                            </div>
+                            <span id="edit-post">•••</span>
+                        </div>
+                        <div class="descricao_post">${busca.postDescricao}</div>
+                        ${busca.postFoto == "null" ? '' : `<div class="foto_posts"><img src="../assets/imgs/${busca.postFoto}" alt=""></div>`}
+                    </div> 
+                `
+            }
+        })
+        bodyBusca.innerHTML = buscaTexto;
+    })
+}
+

@@ -155,6 +155,15 @@ function listarSeguidores(req,res) {
 
 }
 
+function explorar(req,res) {
+    var parametro = req.params.busca;
+    var tipoBusca = req.params.tipoBusca;
+    console.log(tipoBusca)
+    usuarioModel.explorar(parametro, tipoBusca).then(resposta => {
+        res.status(200).json(resposta);
+    })
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -162,5 +171,6 @@ module.exports = {
     atualizar,
     buscarPeloid,
     seguirJogador,
-    listarSeguidores
+    listarSeguidores,
+    explorar
 }
