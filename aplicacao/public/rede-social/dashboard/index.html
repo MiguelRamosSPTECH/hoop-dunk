@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | HoopDunk</title>
+    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <script src="../../js/dashProcess.js"></script>
+    <script src="../../js/sessao.js"></script>
+</head>
+<body onload="kpiDadosUsuarios(), validarSessaoAdm()">
+    <div class="container-all">
+        <div class="nav-lateral">
+            <div class="logo-hoop">
+                <img onclick="window.location='index.html'" src="../IMAGE/logo-hoop-dash.png">
+            </div>            
+            <div class="icons">
+                <img onclick="window.location='index.html'" src="../IMAGE/icon-dash.png">
+            </div>
+            <div class="icons logoff" onclick="limparSessao()">
+                <img onclick="window.location='index.html'" src="../IMAGE/logoff-dash.png">
+            </div>            
+        </div>
+        <div class="body-dash">
+            <div class="header">
+                <span id="title">DASHBOARD</span>
+                <span id="msg_welcome">Olá, <span id="nome_adm"></span></span>
+            </div>
+            <div id="content-info">
+                <div id="area-kpi"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

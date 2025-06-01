@@ -38,4 +38,10 @@ router.get("/:busca/:tipoBusca/explorar", (req,res) => {
     usuarioController.explorar(req,res);
 })
 
+// DASHBOARD
+
+router.get('/dadosDash', (req,res) => {
+    usuarioController.dadosUserDash(req,res);
+})
+
 module.exports = router;

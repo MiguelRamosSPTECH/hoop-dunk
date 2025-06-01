@@ -26,6 +26,14 @@ function validarSessao() {
     }
 }
 
+function validarSessaoAdm() {
+    if(sessionStorage.DADOS_USUARIO == undefined || JSON.parse(sessionStorage.DADOS_USUARIO)[0].id != 16) {
+        limparSessao()
+        window.location = "../../site/login.html"
+    }
+    nome_adm.innerHTML = JSON.parse(sessionStorage.DADOS_USUARIO)[0].nome;
+}
+
 function limparSessao() {
     sessionStorage.clear();
     window.location = "../../site/login.html";
@@ -47,4 +55,5 @@ function finalizarAguardar(texto) {
         divErrosLogin.innerHTML = texto;
     }
 }
+
 

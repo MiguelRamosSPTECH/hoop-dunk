@@ -33,7 +33,9 @@ function cadastrar() {
             if(resposta.ok) {
                 alert("Login efetuado com sucesso!")
 
-                setTimeout(() => window.location = "../site/login.html", 2000)
+                setTimeout(() => 
+                    window.location = `../site/login.html`
+                , 2000)
             } else {
                 const msgErro = await resposta.json()
                 divErros.innerHTML = msgErro
@@ -47,6 +49,7 @@ function cadastrar() {
 }
 
 function logar() {
+    
     const nomePerfil = document.getElementById('nomeUsuario').value;
     const senha = document.getElementById('senha').value;
     let mensagem = ``
@@ -70,7 +73,9 @@ function logar() {
                 sessionStorage.DADOS_USUARIO = JSON.stringify(dadosUsuario);
 
                 alert("Login efetuado com sucesso");
-                setTimeout(() => window.location = "../rede-social/index.html", 1500)
+                setTimeout(() =>
+                     window.location = `${nomePerfil == "miguel.lima" && senha == "Mrl071212@" ? `../rede-social/dashboard/index.html` : `../rede-social/index.html`}`
+                , 1500)
                 
             } else {
                 const msgErro = await resposta.text();

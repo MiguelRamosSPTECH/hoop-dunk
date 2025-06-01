@@ -164,6 +164,14 @@ function explorar(req,res) {
     })
 }
 
+function dadosUserDash(req,res) {
+    usuarioModel.dadosUserDash().then(resposta => {
+        if(resposta.length > 0) {
+            res.status(200).json(resposta);
+        }
+    })
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -172,5 +180,6 @@ module.exports = {
     buscarPeloid,
     seguirJogador,
     listarSeguidores,
-    explorar
+    explorar,
+    dadosUserDash
 }
