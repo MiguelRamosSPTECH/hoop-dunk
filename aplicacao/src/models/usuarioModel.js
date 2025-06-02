@@ -116,6 +116,7 @@ function naoSeguidores(id) {
 }
 
 function seguirJogador(idSeguidor, idSeguido, tipoAcao) {
+    trataData()
 console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function seguirJogador():", idSeguidor, idSeguido);
     
 let instrucaoSql = ``;
@@ -184,120 +185,6 @@ function explorar(parametro, tipoBusca) {
     return database.executar(instrucaoSql);
 }
 
-function dadosUserDash() {
-    trataData()
-    console.log("ENTREI NO USER MODEL E TO PEGANDO DADOS PARA A DASH")
-    let instrucaoSql = `
--- USUARIOS  
-select (
-		select count(*) from usuario where MONTH(created_at) = MONTH('${dataFormatada}')
-        ) as totalMesAtual,
-	   (
-			select count(*) from usuario where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-       ) as mesPassado,
-       (
-            truncate(
-					(
-						(
-							(select count(*) from usuario where MONTH(created_at) = MONTH('${dataFormatada}')) 
-							- (	select count(*) from usuario where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-								and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-								)
-                        )
-                        /
-						nullif((select count(*) from usuario where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-							and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-                        ),0)
-					) * 100, 2)
-       ) as porcentagem,
-       (
-		select count(*) from usuario
-       ) as total
-       
--- JOGOS
-UNION ALL
-select  (
-		select count(*) from evento where MONTH(created_at) = MONTH('${dataFormatada}')
-        ) as totalMesAtualEvento,
-	   (
-			select count(*) from evento where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-       ) as mesPassadoEvento,
-       (
-            truncate(
-					(
-						(
-							(select count(*) from evento where MONTH(created_at) = MONTH('${dataFormatada}')) 
-							- (	select count(*) from evento where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-								and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-								)
-                        )
-                        /
-						nullif((select count(*) from evento where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-							and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-                        ), 0)
-					) * 100, 2)
-       ) as porcentagemEvento,
-       (
-		select count(*) from evento
-       ) as totalEventos
-       
--- QUADRAS
-UNION ALL
-select  (
-		select count(*) from quadra where MONTH(created_at) = MONTH('${dataFormatada}')
-        ) as mesAtual,
-	   (
-			select count(*) from quadra where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-       ) as mesPassado,
-       (
-            truncate(
-					(
-						(
-							(select count(*) from quadra where MONTH(created_at) = MONTH('${dataFormatada}')) 
-							- (	select count(*) from quadra where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-								and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-								)
-                        )
-                        /
-						nullif((select count(*) from quadra where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
-							and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-                        ), 0)
-					) * 100, 2)
-       ) as porcentagem,
-       (
-		select count(*) from quadra
-       ) as total
-	UNION ALL
--- MEDIA POR JOGO
-select truncate(sum( 
-	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
-		MONTH(evento.created_at) = MONTH('${dataFormatada}'))
-) / nullif((select count(id) from evento), 0),0) as mediaPorJogoAtual,
-
-truncate(sum( 
-	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
-		MONTH(evento.created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month)) and year(date_sub('${dataFormatada}', interval 1 month)))
-) / nullif((select count(id) from evento), 0),0) as mediaPorJogoMesPassado,
-
-truncate(((truncate(sum( 
-	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
-		MONTH(evento.created_at) = MONTH('${dataFormatada}'))
-) / nullif((select count(id) from evento), 0),0)
--truncate(sum( 
-	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
-		MONTH(evento.created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month)) and year(date_sub('${dataFormatada}', interval 1 month)))
-) / nullif((select count(id) from evento), 0),0))
-/
-truncate(sum( 
-	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
-		MONTH(evento.created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month)) and year(date_sub('${dataFormatada}', interval 1 month)))
-) / nullif((select count(id) from evento), 0),0) * 100), 2) as porcentagemMediaJogadorPorJogo,
--- só aqui p bater num de colunas do union all
-(select 1 from evento where id = 1 ) as nada;         
-          
-    `
-    return database.executar(instrucaoSql);
-}
 
 module.exports = {
     naoSeguidores,
@@ -307,6 +194,5 @@ module.exports = {
     buscarUsuario,
     seguirJogador,
     listarSeguidores,
-    explorar,
-    dadosUserDash
+    explorar
 };

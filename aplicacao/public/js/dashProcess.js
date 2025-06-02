@@ -1,5 +1,6 @@
+
 function kpiDadosUsuarios() {
-    fetch('/usuarios/dadosDash', {
+    fetch('/dash/dadosDash', {
         method: "GET"
     })
     .then(async resposta => {
@@ -54,3 +55,115 @@ function kpiDadosUsuarios() {
         }
     })
 }
+
+function buscarFluxoUsuarios() {
+    let tipoFiltro = filtroGrafico.value;
+    if(tipoFiltro == "5 month") {
+        text_filtro.innerText = "6 meses"
+    } else if(tipoFiltro == "1 year") {
+        text_filtro.innerText = "1 ano"
+    } else {
+        text_filtro.innerText = "3 meses"
+    }
+    fetch(`/dash/fluxoUsuarios/${tipoFiltro}`, {
+        method: "GET",
+    })
+    .then(async resposta => {
+        if(resposta.ok) {
+            let dadosFluxo = await resposta.json();
+            plotarGraficoLinha(dadosFluxo)
+        }
+    })
+}
+
+var myChart;
+function plotarGraficoLinha(dados) {
+    var meses = []
+    var usuarios = []
+    var maiorDado = 0
+    for(let i=0;i<dados.length;i++) {
+        meses.push(dados[i].anoMes)
+        usuarios.push(dados[i].qtdUsuarios)
+        if(dados[i].qtdUsuarios > maiorDado) {
+            maiorDado = dados[i].qtdUsuarios;
+        }
+    }
+
+    let ctx = document.getElementById('fluxo-usuarios').getContext('2d');
+    if(myChart) {
+        myChart.destroy()
+    }
+    myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: meses,
+            datasets:[{
+                data: usuarios,
+                backgroundColor: [
+                  '#eaad59', // Cor de fundo das linhas
+                ],        
+                borderColor: [
+                    '#eaad59'
+                ]       , 
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: maiorDado+5
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    })
+}
+
+function tipoJogadoresEvento() {
+    fetch('/dash/tipoJogadoresEvento', {
+        method: "GET"
+    })
+    .then(async resposta => {
+        const dados = await resposta.json();
+        plotarGraficoPizza(dados);
+    })
+}
+var graficoPizza;
+function plotarGraficoPizza(dados) {
+    var tipos = []
+    let jogadores = []
+
+    for(let i=0;i<dados.length;i++) {
+        tipos.push(dados[i].tipoJogador)
+        jogadores.push(dados[i].qtdUsuarios);
+    }
+    if(graficoPizza) {
+        graficoPizza.destroy()
+    }
+    let ctx = document.getElementById('tipo-jogadores').getContext('2d');
+    graficoPizza = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: tipos,
+            datasets: [{
+            data: jogadores,
+            backgroundColor: [
+                '#0559d4',
+                '#b4926b',
+            ],
+            hoverOffset: 4,
+            borderWidth: 0
+            }]
+        }
+    });
+}
+
+    setInterval(() => {
+        buscarFluxoUsuarios(),
+        tipoJogadoresEvento()
+    }, 3000)

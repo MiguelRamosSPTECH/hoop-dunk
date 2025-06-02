@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | HoopDunk</title>
     <link rel="stylesheet" href="../CSS/dashboard.css">
-    <script src="../../js/dashProcess.js"></script>
+    <script src="../../js/dashProcess.js" defer></script>
     <script src="../../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body onload="kpiDadosUsuarios(), validarSessaoAdm()">
+<body onload="kpiDadosUsuarios(), validarSessaoAdm(), buscarFluxoUsuarios(), tipoJogadoresEvento()">
     <div class="container-all">
         <div class="nav-lateral">
             <div class="logo-hoop">
@@ -28,6 +29,25 @@
             </div>
             <div id="content-info">
                 <div id="area-kpi"></div>
+                <div id="area-graficos">
+                    <div class="grafico">
+                        <div class="filtro">
+                            <span>Usuários Cadastrados nos ultímos <span id="text_filtro"></span></span>
+                            <select id="filtroGrafico" onchange="buscarFluxoUsuarios()">
+                                <option value="5 month">6 meses</option>
+                                <option value="1 year"> 1 ano</option>
+                                <option value="2 month">3 meses</option>
+                            </select>
+                        </div>
+                        <canvas id="fluxo-usuarios"></canvas>
+                    </div>
+                    <div class="grafico">
+                        <div class="filtro">
+                            <span>Tipos de Jogadores em Eventos</span>
+                        </div>
+                        <canvas id="tipo-jogadores"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
