@@ -162,8 +162,3 @@ function plotarGraficoPizza(dados) {
         }
     });
 }
-
-    setInterval(() => {
-        buscarFluxoUsuarios(),
-        tipoJogadoresEvento()
-    }, 3000)

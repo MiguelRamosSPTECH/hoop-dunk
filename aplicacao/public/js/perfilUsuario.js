@@ -58,7 +58,7 @@ function carregarPerfil() {
                         <button onclick="seguirJogador(${dadosJson.id},${dados[0].id}, this.innerText)">${dados[0].voceSegue ? "Deixar de seguir" : "Seguir"}</button>
                     `
                 }
-                if(dados.length > 1 && dados[0].fotoPost != null) {
+                if(dados[0].fotoPost != null || dados[0].descPost != null) {
                     dados.forEach(post => {
                         if(post.mensagem != "proprioUsuario") {
                             postsText+=`
@@ -76,6 +76,7 @@ function carregarPerfil() {
                                     </div>
                                     <div class="descricao_post">${post.descPost}</div>
                                     ${post.fotoPost == "null" ? '' : `<div class="foto_posts"><img src="../../assets/imgs/${post.fotoPost}" alt=""></div>`}
+                                    <div class="info-post"><img onclick='carregarDescPost(${post.idPost}, "perfil")' src='../../rede-social/IMAGE/coment-icon.png'> ${post.qtdComentarios}</div>
                                 </div>                                             
                             `
                         }
@@ -126,25 +127,34 @@ function editProfile() {
     formData.append("posicao", select_position.value);
     formData.append("email", ipt_email.value);
     formData.append("senha", ipt_senha.value);
-    formData.append("foto", ipt_fotoPerfil.files[0]);
-    //aqui ele cuida dos tipos dos dados automaticamente.
+    formData.append("foto", ipt_fotoPerfil.files[0] || null);
 
-    fetch(`/usuarios/${id}/atualizar`, {
-        method:"PUT",
-        body: formData,
-    })
-    .then(async resposta => {
-        if(resposta.ok) {
-            const dadosAtualizados = await resposta.json();
-            console.log("DADOS ATUALIZADOS: ", dadosAtualizados);
-            sessionStorage.DADOS_USUARIO = JSON.stringify(dadosAtualizados);
-            location.reload()
-        }
-    })
-    .catch(async erro => {
-        const mgsErro = await resposta.text();
-        console.log("deu erro", mgsErro);
-    })
+    if(formData.get('nome') == "" || formData.get('nomePerfil') == "" || formData.get('nivel') == "#" || formData.get('posicao') == "#" || formData.get('email') == "" || formData.get('nivel') == "" || formData.get('posicao') == "") {
+        gerarAlerta('Campos em branco!')
+    } else if(!/^([A-Z][a-z]+)(\s[A-Z][a-z]+)+$/.test(formData.get('nome'))) {
+        gerarAlerta('Insira Nome e Sobrenome com primeira letra maiuscula')
+    } else if(formData.get('nomePerfil').length < 5) {
+        gerarAlerta('Nome de perfil deve ter no mínimo 5 caracteres')
+    } else if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(formData.get('email'))) {
+        gerarAlerta(`Insira um e-mail válido`)
+    } else {
+        fetch(`/usuarios/${id}/atualizar`, {
+            method:"PUT",
+            body: formData,
+        })
+        .then(async resposta => {
+            if(resposta.ok) {
+                const dadosAtualizados = await resposta.json();
+                console.log("DADOS ATUALIZADOS: ", dadosAtualizados);
+                sessionStorage.DADOS_USUARIO = JSON.stringify(dadosAtualizados);
+                location.reload()
+            }
+        })
+        .catch(async erro => {
+            const mgsErro = await resposta.text();
+            console.log("deu erro", mgsErro);
+        })
+    }
 }
 
 function explorar(elemento) {
@@ -155,7 +165,6 @@ function explorar(elemento) {
     })
     .then(async resposta => {
         let resultadoBusca = await resposta.json();
-        console.log(resultadoBusca);
         let divBusca = document.getElementById('search_result');
         let bodyBusca = document.getElementById('body-search');
         let buscaTexto = ``
@@ -176,7 +185,7 @@ function explorar(elemento) {
                     <div class="posts">
                         <div class="area1-post">
                             <div class="infoUser">
-                                <img onclick="window.location='./perfil-jogador/index.html?idUsuario=${busca.idUsuario}'" class="foto-user-post" src="../assets/imgs/${busca.fotoUsuario || 'sem_imagem_avatar.png'}" alt="">
+                                <img onclick="window.location='./perfil-jogador/index.html${busca.id == idUsuario ? "" : `?idUsuario=${busca.id}`}'" class="foto-user-post" src="../assets/imgs/${busca.fotoUsuario || 'sem_imagem_avatar.png'}" alt="">
                                 <div class="infos-user-post">
                                     <span>${busca.nomeUsuario}</span>
                                     <span class="arroba">@${busca.perfilUsuario}</span>
@@ -187,6 +196,7 @@ function explorar(elemento) {
                         </div>
                         <div class="descricao_post">${busca.postDescricao}</div>
                         ${busca.postFoto == "null" ? '' : `<div class="foto_posts"><img src="../assets/imgs/${busca.postFoto}" alt=""></div>`}
+                        <div class="info-post"><img onclick='carregarDescPost(${busca.idPost}, "explorar")' src='../../rede-social/IMAGE/coment-icon.png'> ${busca.qtdComentarios}</div>
                     </div> 
                 `
             }
@@ -194,4 +204,5 @@ function explorar(elemento) {
         bodyBusca.innerHTML = buscaTexto;
     })
 }
+
 

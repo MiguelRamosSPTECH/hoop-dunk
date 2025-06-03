@@ -32,8 +32,8 @@
             </a>
         </div>
         <div id="area-posts">
-            <div id="area-send-post">
-                <div id="content-post">
+            <div class="area-send-post">
+                <div class="content-post">
                     <div class="foto-perfil post"></div>
                     <textarea maxlength="43" id="desc-post" onkeyup="atualizaButton()" rows="1" placeholder="We’re gonna be championships!"></textarea>
                 </div>
@@ -58,6 +58,11 @@
     </div>
 </body>
 <script>
+    const params= new URLSearchParams(window.location.search);
+    let idPost = params.get('idPost');
+    if(idPost) {
+        carregarDescPost(idPost, "feed");
+    }
     function atualizaButton() {
         const descPost = document.getElementById('desc-post').value;
         if(descPost.length > 0) {

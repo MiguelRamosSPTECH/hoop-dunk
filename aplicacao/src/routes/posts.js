@@ -10,4 +10,12 @@ router.post('/publicar', upload.single('fotoPost'), (req,res)=> {
 router.get('/buscar', (req,res)=> {
     postController.allPosts(req,res);
 })
+
+router.get('/:idPost/descPost', (req,res) => {
+    postController.descPost(req,res);
+})
+
+router.post('/comentarPost', upload.single('fotoComentario'), (req,res)=>{
+    postController.comentarPost(req,res)
+})
 module.exports = router;

@@ -116,7 +116,7 @@ body, html {
     border-left: 1px solid gray;
     border-right: 1px solid gray;
 }
-#area-send-post {
+.area-send-post {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,7 +125,7 @@ body, html {
     padding-bottom: 15px;
     border-bottom: 1px solid gray;
 }
-#content-post {
+.content-post {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,6 +140,7 @@ body, html {
     background-size: cover;
     border-radius: 50%;
 }
+
 #desc-post {
     font-family: "Poppins", sans-serif;
     background-color: transparent;
@@ -165,8 +166,8 @@ body, html {
     height: 70%;
 }
 #send-photo {
-    width: 100%;
-    height: 100%;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
 }
 #foto_post {
@@ -192,6 +193,9 @@ body, html {
     border: none;
     margin-right: 15px;
     cursor: pointer;    
+}
+.comment {
+    width: 16.5% !important;
 }
 
 /* pesquisar e seguidores */
@@ -281,6 +285,11 @@ body, html {
     overflow: auto;
     scrollbar-width: none; 
 }
+#comments-all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
 
 .posts {
     display: flex;
@@ -292,6 +301,7 @@ body, html {
     font-size: 16px;
     border-bottom: 2px solid rgba(53, 53, 53, 0.541);
 }
+
 .area1-post {
     display: flex;
     width: 100%;
@@ -461,6 +471,30 @@ body, html {
 .arroba_pessoa_search {
     color: gray;
     font-weight: 700;
+}
+
+/* comentarios dos posts */
+.info-post {
+    display: flex;
+    align-items: end;
+    width: 77%;
+    height: 50px;
+    gap: 5px;
+    font-size: 12px;
+    color: gray;
+    font-weight: bold;
+}
+.info-post img {
+    height: 45%;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+.info-post img:hover {
+    transform: scale(1.04);
+    background-color: rgba(30, 143, 255, 0.589);
+    padding: 3.5px;
+    border-radius: 50%;
+    height: 35%;
 }
 
 

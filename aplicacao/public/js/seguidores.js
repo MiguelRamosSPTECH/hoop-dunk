@@ -46,7 +46,7 @@ function trazerPessoas(tipoAcao) {
             pessoas.forEach(pessoa => {
                 listaPessoas+=`
                     <div class="pessoa">
-                        <img onclick="window.location = 'index.html?idUsuario=${pessoa.id}'"  src="../../assets/imgs/${pessoa.foto || `sem_imagem_avatar.png`}" alt="">
+                        <img onclick="window.location = 'index.html?${pessoa.id == JSON.parse(sessionStorage.DADOS_USUARIO)[0].id ? "" : `idUsuario=${pessoa.id}`}'"  src="../../assets/imgs/${pessoa.foto || `sem_imagem_avatar.png`}" alt="">
                         <div class="info-pessoa">
                             <label>${pessoa.nome}</label>
                             <span>@${pessoa.nomePerfil}</span>

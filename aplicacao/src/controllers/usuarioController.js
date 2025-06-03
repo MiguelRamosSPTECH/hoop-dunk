@@ -94,11 +94,9 @@ function sugestoesNaoSeguidores(req,res) {
 
 function atualizar(req, res) {
     const id = req.params.id;
-    const foto = req.file.filename //pegando a foto que vem como file.
-
+    const foto = req.file == undefined ? null : req.file.filename
     const { nome, nomePerfil, nivel, posicao, email, senha } = req.body;
     const usuario = { nome, nomePerfil, nivel, posicao, email, senha, foto};
-
     usuarioModel.atualizar(id, usuario).then(resposta => {
         if(resposta.affectedRows == 1) {
             usuarioModel.buscarUsuario(id, false).then(resposta => {
@@ -158,7 +156,6 @@ function listarSeguidores(req,res) {
 function explorar(req,res) {
     var parametro = req.params.busca;
     var tipoBusca = req.params.tipoBusca;
-    console.log(tipoBusca)
     usuarioModel.explorar(parametro, tipoBusca).then(resposta => {
         res.status(200).json(resposta);
     })

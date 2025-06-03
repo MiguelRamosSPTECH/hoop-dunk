@@ -11,7 +11,7 @@ function cadastrar() {
     } else if(!/^([A-Z][a-z]+)(\s[A-Z][a-z]+)+$/.test(nome)) {
         mensagem = `Nome completo deve ter Nome e Sobrenome`
     } else if(nomeUsuario.validity.tooShort) {
-        mensagem = `Nome de perfil deve conter mais que 5 caracteres!`
+        mensagem = `Nome de perfil deve conter no mínimo 5 caracteres!`
     } else if(!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
         mensagem = `Insira um e-mail válido`
     } else if(senha.validity.tooShort) {
@@ -72,7 +72,7 @@ function logar() {
 
                 sessionStorage.DADOS_USUARIO = JSON.stringify(dadosUsuario);
 
-                alert("Login efetuado com sucesso");
+                alert("Login efetuado com sucesso");               
                 setTimeout(() =>
                      window.location = `${nomePerfil == "miguel.lima" && senha == "Mrl071212@" ? `../rede-social/dashboard/index.html` : `../rede-social/index.html`}`
                 , 1500)

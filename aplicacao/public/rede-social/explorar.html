@@ -30,7 +30,7 @@
                 </div>
             </a>
         </div> 
-        <div class="search-content">
+        <div class="search-content" id="search-explorar">
             <div id="area-pesquisar">
                 <div id="input-pesquisar">
                     <img src="./IMAGE/search-icon.png"><input type="text" onkeyup="explorar('Pessoas')" placeholder="Pesquisar" id="search_people">
@@ -53,4 +53,14 @@
         </div>            
     </div>
 </body>
+<script>
+    function atualizaButton() {
+        const descPost = document.getElementById('desc-post').value;
+        if(descPost.length > 0) {
+            send_post.style.backgroundColor = "white"
+        } else {
+            send_post.style.backgroundColor = "#888888"
+        }
+    }
+</script>
 </html>

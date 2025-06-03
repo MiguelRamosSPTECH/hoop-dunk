@@ -45,14 +45,14 @@ function atualizar(id, usuario) {
     if(usuario.senha == "") {
         instrucaoSql = `
         UPDATE usuario set nome = '${usuario.nome}', nomePerfil = '${usuario.nomePerfil}', 
-        email = '${usuario.email}', posicao = '${usuario.posicao}', nivel = '${usuario.nivel}', 
-        foto = '${usuario.foto}' WHERE id = ${id};
+        email = '${usuario.email}', posicao = '${usuario.posicao}', nivel = '${usuario.nivel}' 
+        ${usuario.foto == null ? "" : `, foto = '${usuario.foto}'`} WHERE id = ${id};
         `
     } else {
         instrucaoSql = `
             UPDATE usuario set nome = '${usuario.nome}', nomePerfil = '${usuario.nomePerfil}', 
-            email = '${usuario.email}', posicao = '${usuario.posicao}', nivel = '${usuario.nivel}', 
-            foto = '${usuario.foto}', senha = '${usuario.senha}' WHERE id = ${id};
+            email = '${usuario.email}', posicao = '${usuario.posicao}', nivel = '${usuario.nivel}'
+            ${usuario.foto == null ? "" : `, foto = '${usuario.foto}'`}, senha = SHA2('${usuario.senha}', 256) WHERE id = ${id};
             `
     }
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -65,24 +65,32 @@ console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: co
     if(idSeguido == "false" || idSeguido == false) { //dependendo da onde vem ele vem como texto e como boolean msm
         instrucaoSql = `
             select u.*,
+            p.id as idPost,
             p.idUsuario,
             p.descricao as descPost,
             p.foto as fotoPost,
             date_format(p.dtPost, "%d de %M") as dtPost,
+            (
+	            select count(idUsuario) from comentarioPost where idPost = p.id
+            ) as qtdComentarios,
             (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
             (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo
             from usuario u
             left join post p on
             p.idUsuario = u.id
             where u.id = ${idSeguidor}
-            order by dtPost desc; 
+            order by p.id desc; 
         `
     } else {
             instrucaoSql = `select u.*,
+            p.id as idPost,
             p.idUsuario,
             p.descricao as descPost,
             p.foto as fotoPost,
             date_format(p.dtPost, "%d de %M") as dtPost,
+            (
+	            select count(idUsuario) from comentarioPost where idPost = p.id
+            ) as qtdComentarios,
             (select count(*) from seguidores s1 where s1.idSeguido = u.id)as seguidores,
             (select count(*) from seguidores s2 where s2.idSeguidor = u.id) as seguindo,
             (select 1 from seguidores where idSeguidor = ${idSeguidor} and idSeguido = ${idSeguido}) as voceSegue
@@ -90,7 +98,7 @@ console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: co
             left join post p on
             p.idUsuario = u.id            
             where u.id = ${idSeguido}
-            order by dtPost desc;
+            order by p.id desc;
         `
     }
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -172,8 +180,13 @@ function explorar(parametro, tipoBusca) {
             u.nome as nomeUsuario, 
             u.nomePerfil as perfilUsuario, 
             u.foto as fotoUsuario,
-            p.descricao as postDescricao, p.foto as postFoto,
-            date_format(p.dtPost, "%d de %M") as dtPost
+            p.id as idPost,
+            p.descricao as postDescricao, 
+            p.foto as postFoto,
+            date_format(p.dtPost, "%d de %M") as dtPost,
+            (
+	            select count(idUsuario) from comentarioPost where idPost = p.id
+            ) as qtdComentarios
             from post p
             inner join usuario u on
             u.id = p.idUsuario
