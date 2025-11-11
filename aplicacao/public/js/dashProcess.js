@@ -24,6 +24,9 @@ function kpiDadosUsuarios() {
                     nomeKpi = `Taxa de Participações por Jogo`
                     fotoKpi = `mediaPlayer-dash.png`
                 }
+                if(dados[i].porcentagem == null) {
+                    dados[i].porcentagem = 100
+                }
                 dadosText+=`
                     <div class="kpi">
                         <div class="title-kpi">
@@ -40,7 +43,7 @@ function kpiDadosUsuarios() {
                                 </div>
                                 <div class="infos">
                                     <span class="title-info">MÊS ATUAL</span>
-                                    <span class="info">${dados[i].totalMesAtual} <span style="${dados[i].porcentagem < 0 ? "color:red !important" : "color:green"}" class="porcent">${dados[i].porcentagem}%</span></span>
+                                    <span class="info">${dados[i].totalMesAtual} <span style="${dados[i].porcentagem <= 0 ? "color:red !important" : "color:green"}" class="porcent">${dados[i].porcentagem}%</span></span>
                                 </div>                                
                             </div>
                                 <div class="infos" ${i == 3 ? `style="opacity: 0 !important;"` : ``}>

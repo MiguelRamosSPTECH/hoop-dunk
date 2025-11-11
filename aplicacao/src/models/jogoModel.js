@@ -142,7 +142,7 @@ function buscarPorId(idJogo) {
         e.observacao as descJogo,
         e.idQuadra as idQuadra,
         e.nome as nomeQuadra
-        FROM EVENTO e 
+        from evento e
         inner join quadra q on
         e.idQuadra = q.id
         where e.id = ${idJogo};`;

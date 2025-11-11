@@ -60,9 +60,24 @@ function usuarioParticipar(req,res) {
     })
 }
 
+
+function editarQuadra(req,res) {
+    const foto = req.file == undefined ? "" : req.file.filename;
+    const { idQuadra, nome, localizacao, descricao } = req.body;
+    const dadosQuadra = { idQuadra, nome, localizacao, descricao, foto };
+    quadraModel.editarQuadra(dadosQuadra).then(resposta => {
+        if(resposta.affectedRows == 1) {
+            res.status(200).send("OK")
+        } else {
+            res.status(401).json(resposta);
+        }
+    })
+}
+
 module.exports = {
     cadastrar,
     buscar,
     buscarPeloId,
-    usuarioParticipar
+    usuarioParticipar,
+    editarQuadra
 }

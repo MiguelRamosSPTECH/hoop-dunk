@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 
     const novoNomeArquivo = require('crypto')
       .randomBytes(64)
-      .toString('hex');
+      .toString('hex'); 
 
 
     cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)

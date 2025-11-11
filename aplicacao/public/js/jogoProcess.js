@@ -127,6 +127,9 @@ function cadastrarJogo() {
         .then(async resposta => {
             if(resposta.ok) {
                 gerarAlerta("Jogo criado com sucesso!", true);
+                setTimeout(()=>
+                    location.reload()
+                ,2000)                
                 // achar forma de recarregar página
             } else {
                 const msgErro = await resposta.text()

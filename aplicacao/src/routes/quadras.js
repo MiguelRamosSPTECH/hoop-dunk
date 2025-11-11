@@ -21,5 +21,8 @@ router.post('/:id/:idQuadra/:tipoAcao/participar', function(req,res) {
     quadraController.usuarioParticipar(req,res);
 })
 
+router.put('/editarQuadra', upload.single('foto'), (req,res) => {
+    quadraController.editarQuadra(req,res);
+})
 
 module.exports = router;

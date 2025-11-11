@@ -27,7 +27,7 @@ function validarSessao() {
 }
 
 function validarSessaoAdm() {
-    if(sessionStorage.DADOS_USUARIO == undefined || JSON.parse(sessionStorage.DADOS_USUARIO)[0].id != 16) {
+    if(sessionStorage.DADOS_USUARIO == undefined || JSON.parse(sessionStorage.DADOS_USUARIO)[0].id != 26) {
         limparSessao()
         window.location = "../../site/login.html"
     }

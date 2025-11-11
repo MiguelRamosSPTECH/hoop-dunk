@@ -30,9 +30,11 @@ function dadosUserDash() {
 -- USUARIOS  
 select (
 		select count(*) from usuario where MONTH(created_at) = MONTH('${dataFormatada}')
+        and year(created_at) = year('${dataFormatada}')
         ) as totalMesAtual,
 	   (
 			select count(*) from usuario where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
+            and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
        ) as mesPassado,
        (
             truncate(
@@ -44,9 +46,9 @@ select (
 								)
                         )
                         /
-						nullif((select count(*) from usuario where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
+						(select count(*) from usuario where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
 							and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-                        ),0)
+                        )
 					) * 100, 2)
        ) as porcentagem,
        (
@@ -71,9 +73,9 @@ select  (
 								)
                         )
                         /
-						nullif((select count(*) from evento where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
+						(select count(*) from evento where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
 							and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-                        ), 0)
+                        )
 					) * 100, 2)
        ) as porcentagemEvento,
        (
@@ -98,9 +100,9 @@ select  (
 								)
                         )
                         /
-						nullif((select count(*) from quadra where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
+						(select count(*) from quadra where MONTH(created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month))
 							and year(created_at) = year(date_sub('${dataFormatada}', interval 1 month))
-                        ), 0)
+                        )
 					) * 100, 2)
        ) as porcentagem,
        (
@@ -111,26 +113,26 @@ select  (
 select truncate(sum( 
 	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
 		MONTH(evento.created_at) = MONTH('${dataFormatada}'))
-) / nullif((select count(id) from evento), 0),0) as mediaPorJogoAtual,
+) / (select count(id) from evento),0) as mediaPorJogoAtual,
 
 truncate(sum( 
 	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
 		MONTH(evento.created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month)) and year('${dataFormatada}') = year(date_sub('${dataFormatada}', interval 1 month)))
-) / nullif((select count(id) from evento), 0),0) as mediaPorJogoMesPassado,
+) / (select count(id) from evento),0) as mediaPorJogoMesPassado,
 
 truncate(((truncate(sum( 
 	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
 		MONTH(evento.created_at) = MONTH('${dataFormatada}'))
-) / nullif((select count(id) from evento), 0),0)
+) / (select count(id) from evento),0)
 -truncate(sum( 
 	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
 		MONTH(evento.created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month)) and year('${dataFormatada}') = year(date_sub('${dataFormatada}', interval 1 month)))
-) / nullif((select count(id) from evento), 0),0))
+) / (select count(id) from evento),0))
 /
 truncate(sum( 
 	(select count(idJogador) from eventoJogadores inner join evento on evento.id = eventoJogadores.idEvento WHERE 
 		MONTH(evento.created_at) = MONTH(date_sub('${dataFormatada}', interval 1 month)) and year('${dataFormatada}') = year(date_sub('${dataFormatada}', interval 1 month)))
-) / nullif((select count(id) from evento), 0),0) * 100), 2) as porcentagemMediaJogadorPorJogo,
+) / (select count(id) from evento),0) * 100), 2) as porcentagemMediaJogadorPorJogo,
 -- só aqui p bater num de colunas do union all
 (select 1 from evento where id = 1 ) as nada;         
           
@@ -140,7 +142,7 @@ truncate(sum(
 
 function tipoJogadoresEvento() {
     var instrucaoSql = `
-        select tipoJogador, count(*) as qtdUsuarios from eventoJogadores
+        select tipoJogador, count(distinct idJogador) as qtdUsuarios from eventoJogadores
         group by tipoJogador;    
     `
     return database.executar(instrucaoSql);

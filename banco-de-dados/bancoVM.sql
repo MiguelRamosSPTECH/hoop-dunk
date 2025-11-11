@@ -1,8 +1,7 @@
-create database if not exists hoopdunk;
+create database hoopdunk;
 
 use hoopdunk;
-show tables;
-select * from usuario;
+
 create table usuario(
 	id int primary key auto_increment,
     nome varchar(45),
@@ -88,9 +87,9 @@ create table eventoJogadores(
 	constraint fkevento_eventoJogadores foreign key(idEvento) references evento(id),
     constraint fkjogador_eventoJogadores foreign key(idJogador) references usuario(id)
 );
-select * from usuario;
+
 -- inserindo dados
-INSERT INTO usuario (nome, nome_perfil, email, senha, posicao, nivel, foto, created_at)
+INSERT INTO usuario (nome, nomePerfil, email, senha, posicao, nivel, foto, created_at)
 VALUES
 -- Junho/2024
 ('Lucas Silva', 'lucas.s', 'lucas.silva@example.com', 'senha123', 'Armador', 'Intermediário', '', '2024-06-04 10:00:00'),
@@ -361,10 +360,12 @@ select * from usuario;
 -- ele só vai p dezembro sem problema e dou interval 1 month que é o mês passado
 -- ano também, por que ele vai ir p 12 mas pode ser o mes 12 de qualquer ano, por isso uso o AND YEAR também;
 select (
-		select count(*) from usuario where MONTH(created_at) = MONTH(curdate())
+		select count(*) from usuario where MONTH(created_at) = MONTH('2025-06-30 23:00:00')
+        and year(created_at) = year(curdate())
         ) as totalMesAtual,
 	   (
 			select count(*) from usuario where MONTH(created_at) = MONTH(date_sub(curdate(), interval 1 month))
+            and year(created_at) = year(date_sub(curdate(), interval 1 month))
        ) as mesPassado,
        (
             truncate(
@@ -467,11 +468,6 @@ truncate(sum(
 select * from usuario;
 
 
--- fluxo de usuarios nos ultimos 6 meses (errado)
-select date_format(created_at, "%M") as Mês, count(*) as qtdUsuarios from usuario where month(created_at) >= month(date_sub(curdate(), interval 6 month))
-and year(date_sub(curdate(), interval 6 month)) -- aqui pega o ano passado também caso chegue
-group by date_format(created_at, "%M");
-
 -- estudar melhor o porque essa query é a correta
 select
   date_format(created_at, '%Y-%m') AS mes_ano,
@@ -480,6 +476,7 @@ from usuario
 where created_at >= date_sub(curdate(), interval 6 month)
 group by date_format(created_at, '%Y-%m')
 order by date_format(created_at, '%Y-%m');
+select * from usuario;
 
 -- trazendo comentários dos posts
 select * from comentarioPost;
@@ -512,4 +509,5 @@ u.id = p.idUsuario
 where p.id = 29;
 
 select * from usuario;
-update usuario set senha = SHA2('senha123', 256) where id = 4;
+
+update usuario set  senha = SHA2('senha123', 256) where id = 29;

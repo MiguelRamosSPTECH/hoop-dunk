@@ -107,10 +107,20 @@ function atualizarNivelQuadra(idQuadra) {
     return database.executar(instrucaoSql);     
 }
 
+function editarQuadra(dadosQuadra) {
+    let instrucaoSql = `
+        UPDATE quadra set nome = '${dadosQuadra.nome}', localizacao = '${dadosQuadra.localizacao}',
+        descricao = '${dadosQuadra.descricao}'${dadosQuadra.foto == "" ? "" : `, foto = '${dadosQuadra.foto}'`}
+        WHERE id = ${dadosQuadra.idQuadra};
+    `
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     buscar,
     buscaPeloId,
     participarQuadra,
-    atualizarNivelQuadra
+    atualizarNivelQuadra,
+    editarQuadra
 }

@@ -17,6 +17,6 @@ function carregarMenuLateral() {
 function tocarMusica() {
     const audio = new Audio();
     audio.src = `../rede-social/musicas/Drake - Laugh Now Cry Later (Official Music Video) ft. Lil Durk.mp3`
-    audio.volume = 0.005
+    audio.volume = 0.1
     audio.play() 
 }

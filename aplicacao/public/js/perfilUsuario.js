@@ -65,7 +65,7 @@ function carregarPerfil() {
                                 <div class="post">
                                     <div class="area1-post">
                                         <div class="infoUser">
-                                            <img onclick="window.location='./perfil-jogador/index.html?idUsuario=${post.idUsuario}'" class="foto-user-post" src="../../assets/imgs/${post.foto || 'sem_imagem_avatar.png'}" alt="">
+                                            <img class="foto-user-post" src="../../assets/imgs/${post.foto || 'sem_imagem_avatar.png'}" alt="">
                                             <div class="infos-user-post">
                                                 <span>${post.nome}</span>
                                                 <span class="arroba">@${post.nomePerfil}</span>
@@ -185,7 +185,7 @@ function explorar(elemento) {
                     <div class="posts">
                         <div class="area1-post">
                             <div class="infoUser">
-                                <img onclick="window.location='./perfil-jogador/index.html${busca.id == idUsuario ? "" : `?idUsuario=${busca.id}`}'" class="foto-user-post" src="../assets/imgs/${busca.fotoUsuario || 'sem_imagem_avatar.png'}" alt="">
+                                <img onclick="window.location='./perfil-jogador/index.html${busca.idUsuario == idUsuario ? "" : `?idUsuario=${busca.idUsuario}`}'" class="foto-user-post" src="../assets/imgs/${busca.fotoUsuario || 'sem_imagem_avatar.png'}" alt="">
                                 <div class="infos-user-post">
                                     <span>${busca.nomeUsuario}</span>
                                     <span class="arroba">@${busca.perfilUsuario}</span>

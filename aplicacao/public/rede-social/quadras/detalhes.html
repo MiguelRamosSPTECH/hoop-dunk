@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="../CSS/descQuadra.css">
     <link rel="stylesheet" href="../CSS/alerta.css">
     <script src="../../js/quadrasProcess.js"></script>
+    <script src="../../js/alertas.js"></script>
 </head>
 <body onload="validarSessao(), detalhesQuadra(), verificarJogo()">
-    <div id="hide"></div>
+    <div id="hide-edit"></div>
     <div class="container-all">
         <div id="navbar-lateral">
             <a id="area-logo-hoopdunk" href="../index.html"></a>
@@ -66,6 +67,48 @@
                 <div id="jogadores-para-seguir"></div>
             </div>
         </div>         
-    </div>    
+    </div> 
+    
+    <!-- modal -->
+     <dialog id="modal-edit">
+        <div id="content">
+            <div id="header-modal">
+                <div id="titulo">
+                    <img onclick="showModalEdit()" id="close-modal" src="../IMAGE/close-icon.png">
+                    <h3>Adicionando quadra</h3>
+                </div>
+                <div id="area-save">
+                    <button onclick="editarQuadra()" id="btnEdit">Salvar</button>
+                </div>
+            </div>
+            <div id="body-modal">
+                <div id="area-edit-photo">
+                    <div class="change-photo">
+                        <label for="ipt_fotoQuadra">
+                            <img src="../IMAGE/icon-addPhoto.png" alt="">
+                        </label>
+                        <input type="file" id="ipt_fotoQuadra" onchange="mudarFoto()">
+                    </div>
+                    <div class="foto-quadra edit"></div>
+                </div>
+                <div class="inputs-2">
+                    <div class="group-input">
+                        <label for="ipt_nome">Nome</label>
+                        <input type="text" id="ipt_nome" minlength="10">
+                    </div>
+                    <div class="group-input">
+                        <label for="ipt_localizacao">Localização</label>
+                        <input type="text" id="ipt_localizacao" minlength="15">
+                    </div>
+                </div>
+                <div class="inputs-1">
+                    <div class="group-input">
+                        <label for="ipt_desc">Descrição</label>
+                        <textarea name="" id="ipt_desc" minlength="20"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </dialog>     
 </body>
 </html>
